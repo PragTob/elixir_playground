@@ -21,4 +21,10 @@ defmodule MyMap do
   def map2(acc, [], _function) do
     acc
   end
+
+  def map3([], _func), do: []
+
+  def map3([head | tail], func) do
+    [func.(head) | map(tail, func)]
+  end
 end
