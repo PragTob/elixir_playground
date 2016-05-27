@@ -1,4 +1,4 @@
-defmodule Counter do
+defmodule MyCounter do
   def inc(pid) do
     send(pid, :inc)
   end

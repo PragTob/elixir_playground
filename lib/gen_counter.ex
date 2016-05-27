@@ -9,7 +9,7 @@ defmodule GenCounter do
     GenServer.cast pid, :dec
   end
 
-  def val(pid, timeout \\ 5000) do
+  def val(pid, _timeout \\ 5000) do
     GenServer.call pid, :val
   end
 
