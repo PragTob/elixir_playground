@@ -1,2 +1,2 @@
-%{"benchee": {:hex, :benchee, "0.1.0", "84d6c15aece81ece6d6b8eb7e10eae6c07e0001b94d3ea3e9f10a88852ee8f55", [:mix], []},
+%{"benchee": {:hex, :benchee, "0.2.0", "a47ceb1aac6fb28d707788dcd45a7ae9a9993e7a414061bebec08184e15e3779", [:mix], []},
   "benchfella": {:hex, :benchfella, "0.3.2", "b9648e77fa8d8b8b9fe8f54293bee63f7de03909b3af6ab22a0e546716a396fb", [:mix], []}}
