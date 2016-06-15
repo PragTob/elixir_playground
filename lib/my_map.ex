@@ -11,7 +11,6 @@ defmodule MyMap do
   defp _map_tco(acc, [head | tail], function) do
     _map_tco([function.(head) | acc], tail, function)
   end
-
   defp _map_tco(acc, [], _function) do
     acc
   end
@@ -21,11 +20,9 @@ defmodule MyMap do
   [2, 3, 4, 5]
   """
   def map_tco_concat(acc \\ [], list, function)
-
   def map_tco_concat(acc, [head | tail], function) do
     map_tco_concat(acc ++ [function.(head)], tail, function)
   end
-
   def map_tco_concat(acc, [], _function) do
     acc
   end
@@ -35,7 +32,6 @@ defmodule MyMap do
   [2, 3, 4, 5]
   """
   def map_body([], _func), do: []
-
   def map_body([head | tail], func) do
     [func.(head) | map_body(tail, func)]
   end
