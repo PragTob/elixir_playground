@@ -1,2 +1,5 @@
 %{"benchee": {:hex, :benchee, "0.2.0", "a47ceb1aac6fb28d707788dcd45a7ae9a9993e7a414061bebec08184e15e3779", [:mix], []},
-  "benchfella": {:hex, :benchfella, "0.3.2", "b9648e77fa8d8b8b9fe8f54293bee63f7de03909b3af6ab22a0e546716a396fb", [:mix], []}}
+  "benchee_csv": {:hex, :benchee_csv, "0.2.0", "b208e1791f8b4d89c154d1eaca6d19caf73855f1f72b6467485aee2a3f587890", [:mix], [{:csv, "~> 1.4.0", [hex: :csv, optional: false]}, {:benchee, "~> 0.2", [hex: :benchee, optional: false]}]},
+  "benchfella": {:hex, :benchfella, "0.3.2", "b9648e77fa8d8b8b9fe8f54293bee63f7de03909b3af6ab22a0e546716a396fb", [:mix], []},
+  "csv": {:hex, :csv, "1.4.1", "8b3a3bc9350ba04532f452c607aa24d59de03a36a2838b1ea17c274646e2f3d5", [:mix], [{:parallel_stream, "~> 1.0.3", [hex: :parallel_stream, optional: false]}]},
+  "parallel_stream": {:hex, :parallel_stream, "1.0.3", "773ee166669eb21b5297ce41b3c7b474be096eb8ed052d457081289a1cf2507a", [:mix], []}}
