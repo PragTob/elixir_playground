@@ -35,4 +35,25 @@ defmodule Number do
   def is_even_tco?(n, acc) do
     is_even_tco?(n - 1, !acc)
   end
+
+  @doc """
+  iex> Number.is_even_tco_new_acc? 1
+  false
+
+  iex> Number.is_even_tco_new_acc? 2
+  true
+
+  iex> Number.is_even_tco_new_acc? 7856
+  true
+
+  iex> Number.is_even_tco_new_acc? 8769
+  false
+  """
+  def is_even_tco_new_acc?(n, acc \\ true)
+  def is_even_tco_new_acc?(0, acc), do: acc
+  def is_even_tco_new_acc?(n, acc) do
+    new_n   = n - 1
+    new_acc = !acc
+    is_even_tco_new_acc?(new_n, new_acc)
+  end
 end
