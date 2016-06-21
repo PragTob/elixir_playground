@@ -6,6 +6,8 @@ Benchee.run %{time: 10, warmup: 10}, [
    fn -> MyMap.map_tco(list, map_fun) end},
   {"map with TCO reverse new acc",
    fn -> MyMap.map_tco_new_acc(list, map_fun) end},
+  {"my_map",
+   fn -> MyMap.my_map(list, map_fun) end},
   {"map with TCO and ++",
    fn -> MyMap.map_tco_concat(list, map_fun) end},
   {"map simple without TCO",
