@@ -32,6 +32,21 @@ defmodule MyMap do
   end
 
   @doc """
+  iex> MyMap.my_map [1, 2, 3, 4], fn(i) -> i + 1 end
+  [2, 3, 4, 5]
+  """
+  def my_map(list, fun) do
+    do_my_map(list, fun, [])
+  end
+  defp do_my_map([], _fun, acc) do
+    Enum.reverse acc
+  end
+  defp do_my_map([head | tail], fun, acc) do
+    new_acc = [fun.(head) | acc]
+    do_my_map(tail, fun, new_acc)
+  end
+
+  @doc """
   iex> MyMap.map_tco_concat [1, 2, 3, 4], fn(i) -> i + 1 end
   [2, 3, 4, 5]
   """
