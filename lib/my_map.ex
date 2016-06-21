@@ -16,6 +16,21 @@ defmodule MyMap do
   end
 
   @doc """
+  iex> MyMap.map_tco_arg_order [1, 2, 3, 4], fn(i) -> i + 1 end
+  [2, 3, 4, 5]
+  """
+  def map_tco_arg_order(list, function) do
+    Enum.reverse do_map_tco_arg_order(list, function, [])
+  end
+
+  defp do_map_tco_arg_order([], _function, acc) do
+    acc
+  end
+  defp do_map_tco_arg_order([head | tail], function, acc) do
+    do_map_tco_arg_order(tail, function, [function.(head) | acc])
+  end
+
+  @doc """
   iex> MyMap.map_tco_new_acc [1, 2, 3, 4], fn(i) -> i + 1 end
   [2, 3, 4, 5]
   """

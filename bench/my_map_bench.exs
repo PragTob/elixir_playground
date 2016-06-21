@@ -6,6 +6,8 @@ Benchee.run %{time: 10, warmup: 10}, [
    fn -> MyMap.map_tco(list, map_fun) end},
   {"map with TCO reverse new acc",
    fn -> MyMap.map_tco_new_acc(list, map_fun) end},
+  {"map with TCO reverse new arg order",
+    fn -> MyMap.map_tco_arg_order(list, map_fun) end},
   {"my_map",
    fn -> MyMap.my_map(list, map_fun) end},
   {"map with TCO and ++",
@@ -19,7 +21,7 @@ Benchee.run %{time: 10, warmup: 10}, [
 ]
 
 
-# tobi@happy ~/github/elixir_playground $ mix run bench/my_map_bench.exs 
+# tobi@happy ~/github/elixir_playground $ mix run bench/my_map_bench.exs
 # Compiled lib/my_map.ex
 # Benchmarking map with TCO reverse...
 # Benchmarking map with TCO reverse new acc...
