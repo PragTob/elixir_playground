@@ -8,11 +8,11 @@ defmodule MyMap do
     Enum.reverse do_map_tco([], list, function)
   end
 
-  defp do_map_tco(acc, [head | tail], function) do
-    do_map_tco([function.(head) | acc], tail, function)
-  end
   defp do_map_tco(acc, [], _function) do
     acc
+  end
+  defp do_map_tco(acc, [head | tail], function) do
+    do_map_tco([function.(head) | acc], tail, function)
   end
 
   @doc """
@@ -23,12 +23,12 @@ defmodule MyMap do
     Enum.reverse do_map_tco_new_acc([], list, function)
   end
 
+  defp do_map_tco_new_acc(acc, [], _function) do
+    acc
+  end
   defp do_map_tco_new_acc(acc, [head | tail], function) do
     new_acc = [function.(head) | acc]
     do_map_tco_new_acc(new_acc, tail, function)
-  end
-  defp do_map_tco_new_acc(acc, [], _function) do
-    acc
   end
 
   @doc """
@@ -51,11 +51,11 @@ defmodule MyMap do
   [2, 3, 4, 5]
   """
   def map_tco_concat(acc \\ [], list, function)
-  def map_tco_concat(acc, [head | tail], function) do
-    map_tco_concat(acc ++ [function.(head)], tail, function)
-  end
   def map_tco_concat(acc, [], _function) do
     acc
+  end
+  def map_tco_concat(acc, [head | tail], function) do
+    map_tco_concat(acc ++ [function.(head)], tail, function)
   end
 
   @doc """
