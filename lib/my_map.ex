@@ -47,6 +47,21 @@ defmodule MyMap do
   end
 
   @doc """
+  iex> MyMap.map_tco_reverse_at_acc [1, 2, 3, 4], fn(i) -> i + 1 end
+  [2, 3, 4, 5]
+  """
+  def map_tco_reverse_at_acc(list, function) do
+    do_map_tco_reverse_at_acc([], list, function)
+  end
+
+  defp do_map_tco_reverse_at_acc(acc, [], _function) do
+    Enum.reverse acc
+  end
+  defp do_map_tco_reverse_at_acc(acc, [head | tail], function) do
+    do_map_tco_reverse_at_acc([function.(head) | acc], tail, function)
+  end
+
+  @doc """
   iex> MyMap.my_map [1, 2, 3, 4], fn(i) -> i + 1 end
   [2, 3, 4, 5]
   """
