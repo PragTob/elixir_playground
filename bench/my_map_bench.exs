@@ -1,7 +1,7 @@
 list = Enum.to_list(1..10_000)
 map_fun = fn(i) -> i + 1 end
 
-Benchee.run %{time: 5, warmup: 2}, [
+Benchee.run %{time: 15, warmup: 5}, [
   {"map with TCO reverse",
    fn -> MyMap.map_tco(list, map_fun) end},
   {"exactly_like_my_map",
@@ -14,8 +14,6 @@ Benchee.run %{time: 5, warmup: 2}, [
    fn -> MyMap.my_map(list, map_fun) end},
   {"map with TCO reverse at acc",
    fn -> MyMap.map_tco_reverse_at_acc(list, map_fun) end},
-  {"map with TCO and ++",
-   fn -> MyMap.map_tco_concat(list, map_fun) end},
   {"map simple without TCO",
    fn -> MyMap.map_body(list, map_fun) end},
   {"map TCO no reverse",
