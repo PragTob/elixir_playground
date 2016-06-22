@@ -4,6 +4,8 @@ map_fun = fn(i) -> i + 1 end
 Benchee.run %{time: 5, warmup: 2}, [
   {"map with TCO reverse",
    fn -> MyMap.map_tco(list, map_fun) end},
+  {"exactly_like_my_map",
+   fn -> MyMap.exactly_like_my_map(list, map_fun) end},
   {"map with TCO reverse new acc",
    fn -> MyMap.map_tco_new_acc(list, map_fun) end},
   {"map with TCO reverse new arg order",

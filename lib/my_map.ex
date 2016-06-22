@@ -62,6 +62,21 @@ defmodule MyMap do
   end
 
   @doc """
+  iex> MyMap.exactly_like_my_map [1, 2, 3, 4], fn(i) -> i + 1 end
+  [2, 3, 4, 5]
+  """
+  def exactly_like_my_map(list, function) do
+    do_exactly_like_my_map(list, function, [])
+  end
+  defp do_exactly_like_my_map([], _function, acc) do
+    Enum.reverse acc
+  end
+  defp do_exactly_like_my_map([head | tail], function, acc) do
+    new_acc = [function.(head) | acc]
+    do_my_map(tail, function, new_acc)
+  end
+
+  @doc """
   iex> MyMap.my_map [1, 2, 3, 4], fn(i) -> i + 1 end
   [2, 3, 4, 5]
   """
