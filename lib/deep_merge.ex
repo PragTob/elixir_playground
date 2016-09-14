@@ -13,6 +13,21 @@ defmodule DeepMerge do
     Map.merge base_map, override, &deep_merge_resolver/3
   end
 
+  def deep_merge(base_map, override, resolver_fun) do
+    # build a function to resolve the merges here and then use an actual
+    # do_deep_merge function to do the merges and refer to that one
+    # when really merging within the built functions
+
+    Map.merge base_map, override, fn
+      orig = %{}, other = %{} -> 2
+
+    end
+  end
+
+  defp build_deep_merge_resolver(fun) do
+
+  end
+
   defp deep_merge_resolver(_key, base_map, override_map) when is_map(base_map) and is_map(override_map) do
     deep_merge(base_map, override_map)
   end
