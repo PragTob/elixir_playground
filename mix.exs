@@ -29,7 +29,8 @@ defmodule ElixirPlayground.Mixfile do
   defp deps do
     [
       {:benchee,     "~> 0.3"},
-      {:benchee_csv, "~> 0.3"}
+      {:benchee_csv, "~> 0.3"},
+      {:credo,       "~> 0.4"}
     ]
   end
 end
