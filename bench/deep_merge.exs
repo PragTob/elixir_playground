@@ -9,6 +9,11 @@ new = Map.merge base_map, %{150 => %{3 => 3}, 160 => %{a: "b"}, z: %{ xui: [44],
 simple = fn(_key, _base, override) -> override end
 
 Benchee.run %{
+  formatters: [&Benchee.Formatters.Console.output/1,
+               &Benchee.Formatters.PlotlyJS.output/1],
+  plotly_js: %{file: "deep_merge_bench.html"}
+},
+%{
   "Map.merge/2"           => fn -> Map.merge orig, new end,
   "Map.merge/3"           => fn -> Map.merge orig, new, simple end,
   "deep_merge/2"          => fn -> DeepMerge.deep_merge orig, new end,
