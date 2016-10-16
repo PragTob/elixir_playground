@@ -2,18 +2,18 @@ defmodule DeepMergeTest do
   use ExUnit.Case
   doctest DeepMerge
 
-  test "deep_merge/3 with custom resolver easy" do
-    res = DeepMerge.deep_merge %{a: [1]}, %{a: [2]}, fn(key, val1, val2) ->
+  test "deep_merge/3 with custom resolver shallow" do
+    res = DeepMerge.deep_merge %{a: [1]}, %{a: [2]}, fn(_key, val1, val2) ->
       val1 ++ val2
     end
 
     assert res == %{a: [1, 2]}
   end
 
-  test "deep_merge/3 with custom resolver adding lists" do
+  test "deep_merge/3 with custom resolver deep" do
     res =
       DeepMerge.deep_merge %{a: %{b: [1]}}, %{a: %{b: [2]}},
-        fn(key, val1, val2) ->
+        fn(_key, val1, val2) ->
           val1 ++ val2
         end
 
@@ -26,7 +26,7 @@ defmodule DeepMergeTest do
         Keyword.merge(list1, list2)
       _, num1, num2 when is_number(num1) and is_number(num2) ->
         num1 + num2
-      _, val1, val2 ->
+      _, val1, _val2 ->
         val1
     end
 
