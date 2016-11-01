@@ -11,3 +11,4 @@ defmodule Patterns do
   def greet(_) do
     IO.puts "Hi"
   end
+end

@@ -1,7 +1,7 @@
-list = Enum.to_list(1..10_000)
+list = Enum.to_list(1..100_000_000)
 map_fun = fn(i) -> i + 1 end
 
-Benchee.run %{time: 10, warmup: 10}, [
+Benchee.run %{time: 30, warmup: 10}, [
   {"stdlib map",
   fn -> Enum.map(list, map_fun) end},
   {"map with TCO reverse",
@@ -23,7 +23,7 @@ Benchee.run %{time: 10, warmup: 10}, [
 ]
 
 
-# tobi@happy ~/github/elixir_playground $ mix run bench/my_map_bench.exs 
+# tobi@happy ~/github/elixir_playground $ mix run bench/my_map_bench.exs
 # Benchmarking stdlib map...
 # Benchmarking map with TCO reverse...
 # Benchmarking exactly_like_my_map...
