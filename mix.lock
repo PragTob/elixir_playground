@@ -1,4 +1,4 @@
-%{"benchee": {:hex, :benchee, "0.5.0", "de9555c5183b1cbb5cbddac723a03accdf6869cd9330f45064dd4411ee060ba1", [:mix], []},
+%{"benchee": {:git, "git@github.com:PragTob/benchee.git", "ec81228ac823881317a3fa407d0215769b27f926", []},
   "benchee_csv": {:hex, :benchee_csv, "0.4.0", "4f0cf0607d47ee636cd5a89bc5b2a6872d7d17b648badd161dc781b2f90b0947", [:mix], [{:benchee, "~> 0.4", [hex: :benchee, optional: false]}, {:csv, "~> 1.4.0", [hex: :csv, optional: false]}]},
   "benchee_json": {:git, "git@github.com:PragTob/benchee_json.git", "032c886f3e7882c2f371466b26fc6b810fadeb48", []},
   "benchee_plotly_js": {:git, "git@github.com:PragTob/benchee_plotly_js.git", "f0a00cc20bf74d4244771eec2a19ae4bc83d4977", []},
@@ -6,5 +6,6 @@
   "bunt": {:hex, :bunt, "0.1.6", "5d95a6882f73f3b9969fdfd1953798046664e6f77ec4e486e6fafc7caad97c6f", [:mix], []},
   "credo": {:hex, :credo, "0.4.12", "f5e1973405ea25c6e64959fb0b6bf92950147a0278cc2a002a491b45f78f7b87", [:mix], [{:bunt, "~> 0.1.6", [hex: :bunt, optional: false]}]},
   "csv": {:hex, :csv, "1.4.3", "de92e2bc85bc09ec676f19f6ec2daa59ba1f0103d1da96cf0cca36342c90d93f", [:mix], [{:parallel_stream, "~> 1.0.4", [hex: :parallel_stream, optional: false]}]},
+  "deep_merge": {:hex, :deep_merge, "0.1.0", "253ddbd6a3c0f9806642ac3ee1517a3dddb7989250ca4edc9abe983a6e6e9244", [:mix], []},
   "parallel_stream": {:hex, :parallel_stream, "1.0.5", "4c78d3e675f9eff885cbe252c89a8fc1d2fb803c0d03a914281e587834e09431", [:mix], []},
   "poison": {:hex, :poison, "2.2.0", "4763b69a8a77bd77d26f477d196428b741261a761257ff1cf92753a0d4d24a63", [:mix], []}}
