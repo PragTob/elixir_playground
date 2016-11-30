@@ -1,23 +1,23 @@
 alias Benchee.Formatters.{Console, HTML}
 map_fun = fn(i) -> i + 1 end
 inputs = %{
-  "Small (1 Thousand)"    => Enum.to_list(1..1_000),
+  "Small (10 Thousand)"    => Enum.to_list(1..10_000),
   "Middle (100 Thousand)" => Enum.to_list(1..100_000),
-  "Big (10 Million)"      => Enum.to_list(1..10_000_000),
+  "Big (1 Million)"       => Enum.to_list(1..1_000_000),
 }
 
 Benchee.run %{
-  "map tail-recursive" =>
+  "tail-recursive" =>
     fn(list) -> MyMap.map_tco(list, map_fun) end,
   "stdlib map" =>
     fn(list) -> Enum.map(list, map_fun) end,
-  "map simple body-recursive" =>
+  "body-recursive" =>
     fn(list) -> MyMap.map_body(list, map_fun) end,
-  "map tail-recursive different argument order" =>
+  "tail-rec arg-order" =>
     fn(list) -> MyMap.map_tco_arg_order(list, map_fun) end
-}, time: 15, warmup: 5, inputs: inputs,
+}, time: 10, warmup: 10, inputs: inputs,
    formatters: [&Console.output/1, &HTML.output/1],
-   html: [file: "tco_detailed.html"]
+   html: [file: "bench/output/tco_detailed.html"]
 
 # tobi@speedy ~/github/elixir_playground $ mix run bench/tco_blog_post_focussed_inputs.exs
 # Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
