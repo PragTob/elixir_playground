@@ -3,7 +3,7 @@ defmodule OldDeepMergeTest do
   doctest OldDeepMerge
 
   test "deep_merge/3 with custom resolver shallow" do
-    res = DeepMerge.deep_merge %{a: [1]}, %{a: [2]}, fn(_key, val1, val2) ->
+    res = OldDeepMerge.deep_merge %{a: [1]}, %{a: [2]}, fn(_key, val1, val2) ->
       val1 ++ val2
     end
 
@@ -12,7 +12,7 @@ defmodule OldDeepMergeTest do
 
   test "deep_merge/3 with custom resolver deep" do
     res =
-      DeepMerge.deep_merge %{a: %{b: [1]}}, %{a: %{b: [2]}},
+      OldDeepMerge.deep_merge %{a: %{b: [1]}}, %{a: %{b: [2]}},
         fn(_key, val1, val2) ->
           val1 ++ val2
         end
@@ -30,7 +30,7 @@ defmodule OldDeepMergeTest do
         val1
     end
 
-    res = DeepMerge.deep_merge %{a: 1, b: [a: 1, c: 3], d: "foo"},
+    res = OldDeepMerge.deep_merge %{a: 1, b: [a: 1, c: 3], d: "foo"},
                                %{a: 2, b: [c: 10, d: 4], d: "bar"},
                                resolver
 

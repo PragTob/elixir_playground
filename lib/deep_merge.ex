@@ -1,4 +1,4 @@
-defmodule OldOldDeepMerge do
+defmodule OldDeepMerge do
   @doc """
   `deep_merge` implementation that uses its own custom resolver implementation
   to pass to `Map.merge/2`

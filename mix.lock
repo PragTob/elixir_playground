@@ -1,6 +1,6 @@
 %{"benchee": {:git, "git@github.com:PragTob/benchee.git", "a9d40e3a1137907997a40399b31e2c5f27679c86", []},
   "benchee_csv": {:hex, :benchee_csv, "0.4.0", "4f0cf0607d47ee636cd5a89bc5b2a6872d7d17b648badd161dc781b2f90b0947", [:mix], [{:benchee, "~> 0.4", [hex: :benchee, optional: false]}, {:csv, "~> 1.4.0", [hex: :csv, optional: false]}]},
-  "benchee_html": {:git, "git@github.com:PragTob/benchee_html.git", "6d66565c0ede4fdc2f55c9b3c51febb7342960a4", []},
+  "benchee_html": {:git, "git@github.com:PragTob/benchee_html.git", "ec89fc4f1af2326cbb093e25cca196a269820477", []},
   "benchee_json": {:git, "git@github.com:PragTob/benchee_json.git", "77c84f32491f7d821b4a105307c742593354b25b", []},
   "benchee_plotly_js": {:git, "git@github.com:PragTob/benchee_plotly_js.git", "f0a00cc20bf74d4244771eec2a19ae4bc83d4977", []},
   "benchfella": {:hex, :benchfella, "0.3.2", "b9648e77fa8d8b8b9fe8f54293bee63f7de03909b3af6ab22a0e546716a396fb", [:mix], []},
