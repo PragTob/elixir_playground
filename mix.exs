@@ -28,10 +28,10 @@ defmodule ElixirPlayground.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:benchee,           "~> 0.6", git: "git@github.com:PragTob/benchee.git", override: true},
-      {:benchee_csv,       "~> 0.3"},
-      {:benchee_plotly_js, "~> 0.1", git: "git@github.com:PragTob/benchee_plotly_js.git"},
-      {:credo,             "~> 0.4"}
+      {:benchee,      "~> 0.6", git: "git@github.com:PragTob/benchee.git", override: true},
+      {:benchee_csv,  "~> 0.3"},
+      {:benchee_html, "~> 0.1", git: "git@github.com:PragTob/benchee_html.git"},
+      {:credo,        "~> 0.4"}
     ]
   end
 

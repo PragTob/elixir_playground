@@ -1,3 +1,4 @@
+alias Benchee.Formatters.{Console, HTML}
 map_fun = fn(i) -> i + 1 end
 inputs = %{
   "Small (1 Thousand)"    => Enum.to_list(1..1_000),
@@ -14,9 +15,11 @@ Benchee.run %{
     fn(list) -> MyMap.map_body(list, map_fun) end,
   "map tail-recursive different argument order" =>
     fn(list) -> MyMap.map_tco_arg_order(list, map_fun) end
-}, time: 15, warmup: 5, inputs: inputs
+}, time: 15, warmup: 5, inputs: inputs,
+   formatters: [&Console.output/1, &HTML.output/1],
+   html: [file: "tco_detailed.html"]
 
-# tobi@speedy ~/github/elixir_playground $ mix run bench/tco_blog_post_focussed_inputs.exs 
+# tobi@speedy ~/github/elixir_playground $ mix run bench/tco_blog_post_focussed_inputs.exs
 # Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
 # Elixir 1.3.4
 # Benchmark suite executing with the following configuration:
