@@ -16,8 +16,8 @@ Benchee.run %{
 %{
   "Map.merge/2"           => fn -> Map.merge orig, new end,
   "Map.merge/3"           => fn -> Map.merge orig, new, simple end,
-  "deep_merge/2"          => fn -> DeepMerge.deep_merge orig, new end,
-  "deep_merge_specific/2" => fn -> DeepMerge.deep_merge_specific orig, new end
+  "deep_merge/2"          => fn -> OldDeepMerge.deep_merge orig, new end,
+  "deep_merge_specific/2" => fn -> OldDeepMerge.deep_merge_specific orig, new end
 }
 
 

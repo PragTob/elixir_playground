@@ -1,6 +1,6 @@
-defmodule DeepMergeTest do
+defmodule OldDeepMergeTest do
   use ExUnit.Case
-  doctest DeepMerge
+  doctest OldDeepMerge
 
   test "deep_merge/3 with custom resolver shallow" do
     res = DeepMerge.deep_merge %{a: [1]}, %{a: [2]}, fn(_key, val1, val2) ->

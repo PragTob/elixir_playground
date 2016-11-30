@@ -1,19 +1,19 @@
-defmodule DeepMerge do
+defmodule OldOldDeepMerge do
   @doc """
   `deep_merge` implementation that uses its own custom resolver implementation
   to pass to `Map.merge/2`
 
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: 2}, %{b: 3, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: 2}, %{b: 3, c: 4})
   %{a: 1, b: 3, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: %{y: 20, z: 30}, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: %{y: 20, z: 30}, c: 4})
   %{a: 1, b: %{x: 10, y: 20, z: 30}, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4})
   %{a: 1, b: 5, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: %{b: %{c: %{d: "foo", e: 2}}}}, %{a: %{b: %{c: %{d: "bar"}}}})
+  iex> OldDeepMerge.deep_merge(%{a: %{b: %{c: %{d: "foo", e: 2}}}}, %{a: %{b: %{c: %{d: "bar"}}}})
   %{a: %{b: %{c: %{d: "bar", e: 2}}}}
   """
   def deep_merge_specific(base_map, override) do
@@ -22,7 +22,7 @@ defmodule DeepMerge do
 
   @doc """
   `deep_merge` implementation that builds upon the more general
-  `DeepMerge.deep_merge/3` to provide its merging capability.
+  `OldDeepMerge.deep_merge/3` to provide its merging capability.
 
   Merges two maps similar to `Map.merge/2`, but with the important difference
   that if keys exist in both maps and their value is also a map it will
@@ -31,19 +31,19 @@ defmodule DeepMerge do
 
   For maps without maps as possible values it behaves exactly like `Map.merge/2`
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: %{y: 20, z: 30}, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: %{y: 20, z: 30}, c: 4})
   %{a: 1, b: %{x: 10, y: 20, z: 30}, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: 2}, %{b: 3, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: 2}, %{b: 3, c: 4})
   %{a: 1, b: 3, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4})
   %{a: 1, b: 5, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: 1, b: 5}, %{b: %{x: 10, y: 9}, c: 4})
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: 5}, %{b: %{x: 10, y: 9}, c: 4})
   %{a: 1, b: %{x: 10, y: 9}, c: 4}
 
-  iex> DeepMerge.deep_merge(%{a: %{b: %{c: %{d: "foo", e: 2}}}}, %{a: %{b: %{c: %{d: "bar"}}}})
+  iex> OldDeepMerge.deep_merge(%{a: %{b: %{c: %{d: "foo", e: 2}}}}, %{a: %{b: %{c: %{d: "bar"}}}})
   %{a: %{b: %{c: %{d: "bar", e: 2}}}}
   """
   def deep_merge(base_map, override) do
@@ -58,11 +58,11 @@ defmodule DeepMerge do
 
   This can also be practical if you want to merge further values like lists.
 
-  iex> DeepMerge.deep_merge(%{a: %{y: "bar", z: "bar"}, b: 2}, %{a: %{y: "foo"}, b: 3, c: 4}, fn(_, _, _) -> :conflict end)
+  iex> OldDeepMerge.deep_merge(%{a: %{y: "bar", z: "bar"}, b: 2}, %{a: %{y: "foo"}, b: 3, c: 4}, fn(_, _, _) -> :conflict end)
   %{a: %{y: :conflict, z: "bar"}, b: :conflict, c: 4}
 
   iex> simple_resolver = fn(_key, base, _override) -> base end
-  iex> DeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4}, simple_resolver)
+  iex> OldDeepMerge.deep_merge(%{a: 1, b: %{x: 10, y: 9}}, %{b: 5, c: 4}, simple_resolver)
   %{a: 1, b: %{x: 10, y: 9}, c: 4}
 
   iex> list_merger = fn
@@ -71,7 +71,7 @@ defmodule DeepMerge do
   ...> _, _, override ->
   ...>   override
   ...> end
-  iex> DeepMerge.deep_merge(%{a: %{b: [1]}, c: 2}, %{a: %{b: [2]}, c: 100}, list_merger)
+  iex> OldDeepMerge.deep_merge(%{a: %{b: [1]}, c: 2}, %{a: %{b: [2]}, c: 100}, list_merger)
   %{a: %{b: [1, 2]}, c: 100}
   """
   def deep_merge(base_map, override_map, fun) do
