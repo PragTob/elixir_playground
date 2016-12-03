@@ -1,4 +1,5 @@
 alias Benchee.Formatters.{Console, HTML}
+
 map_fun = fn(i) -> i + 1 end
 inputs = %{
   "Small (10 Thousand)"   => Enum.to_list(1..10_000),
