@@ -8,8 +8,8 @@ defmodule MyCounter do
   end
 
   def val(pid, timeout \\ 5000) do
-    unique_reference = make_ref
-    send pid, {:val, self, unique_reference}
+    unique_reference = make_ref()
+    send pid, {:val, self(), unique_reference}
 
     receive do
       {^unique_reference, val} -> val
