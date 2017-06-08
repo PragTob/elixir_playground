@@ -7,5 +7,5 @@ drop_off = "Other Street"
 
 
 [pick_up, drop_off]
-|> Enum.map(fn(address) -> Task.async(fn -> Geocoder.geocode(address) end) end)
+|> Enum.map(fn(address) -> Task.async(&geocode/1) end)
 |> Enum.map(&Task.await/1)
