@@ -63,6 +63,14 @@ defmodule Zip do
   defp do_zip_map_reduce(list_of_lists, acc) do
     converter = fn list, acc -> do_zip_each(list, acc) end
     {remaining, heads} = Enum.map_reduce(list_of_lists, [], converter)
-    do_zip_recur(remaining, heads, acc)
+    do_zip_recur_map_reduce(remaining, heads, acc)
+  end
+
+  defp do_zip_recur_map_reduce(remaining, heads, acc) do
+    if Enum.all?(heads, &is_nil/1) do
+      Enum.reverse(acc)
+    else
+      do_zip_map_reduce(remaining, [Enum.reverse(heads) | acc])
+    end
   end
 end
