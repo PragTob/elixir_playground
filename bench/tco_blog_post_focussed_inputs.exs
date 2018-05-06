@@ -1,89 +1,180 @@
 alias Benchee.Formatters.{Console, HTML}
-map_fun = fn(i) -> i + 1 end
+map_fun = fn i -> i + 1 end
+
 inputs = %{
-  "Small (10 Thousand)"   => Enum.to_list(1..10_000),
+  "Small (10 Thousand)" => Enum.to_list(1..10_000),
   "Middle (100 Thousand)" => Enum.to_list(1..100_000),
-  "Big (1 Million)"       => Enum.to_list(1..1_000_000),
-  "Bigger (5 Million)"    => Enum.to_list(1..5_000_000)
+  "Big (1 Million)" => Enum.to_list(1..1_000_000),
+  "Bigger (5 Million)" => Enum.to_list(1..5_000_000)
 }
 
-Benchee.run %{
-  "tail-recursive" =>
-    fn(list) -> MyMap.map_tco(list, map_fun) end,
-  "stdlib map" =>
-    fn(list) -> Enum.map(list, map_fun) end,
-  "body-recursive" =>
-    fn(list) -> MyMap.map_body(list, map_fun) end,
-  "tail-rec arg-order" =>
-    fn(list) -> MyMap.map_tco_arg_order(list, map_fun) end
-}, time: 40, warmup: 40, inputs: inputs,
-   formatters: [&Console.output/1, &HTML.output/1],
-   html: [file: "bench/output/tco_focussed_detailed.html"]
+Benchee.run(
+  %{
+    "tail-recursive" => fn list -> MyMap.map_tco(list, map_fun) end,
+    "stdlib map" => fn list -> Enum.map(list, map_fun) end,
+    "body-recursive" => fn list -> MyMap.map_body(list, map_fun) end,
+    "tail-rec arg-order" => fn list -> MyMap.map_tco_arg_order(list, map_fun) end
+  },
+  memory_time: 2,
+  inputs: inputs,
+  formatters: [Console, HTML],
+  console: [extended_statistics: true],
+  html: [file: "bench/output/tco_focussed_detailed.html"]
+)
 
-# tobi@speedy ~/github/elixir_playground $ mix run bench/tco_blog_post_focussed_inputs.exs
-# Erlang/OTP 19 [erts-8.1] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
-# Elixir 1.3.4
+# tobi@speedy:~/github/elixir_playground(master)$ mix run bench/tco_blog_post_focussed_inputs.exs
+# Operating System: Linux"
+# CPU Information: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+# Number of Available Cores: 8
+# Available memory: 15.61 GB
+# Elixir 1.6.4
+# Erlang 20.3
+
 # Benchmark suite executing with the following configuration:
-# warmup: 5.0s
-# time: 15.0s
+# warmup: 2 s
+# time: 5 s
+# memory time: 2 s
 # parallel: 1
-# inputs: Big (10 Million), Middle (100 Thousand), Small (1 Thousand)
-# Estimated total run time: 240.0s
-#
-#
-# Benchmarking with input Big (10 Million):
-# Benchmarking map simple body-recursive...
-# Benchmarking map tail-recursive...
-# Benchmarking map tail-recursive different argument order...
-# Benchmarking stdlib map...
-#
-# Benchmarking with input Middle (100 Thousand):
-# Benchmarking map simple body-recursive...
-# Benchmarking map tail-recursive...
-# Benchmarking map tail-recursive different argument order...
-# Benchmarking stdlib map...
-#
-# Benchmarking with input Small (1 Thousand):
-# Benchmarking map simple body-recursive...
-# Benchmarking map tail-recursive...
-# Benchmarking map tail-recursive different argument order...
-# Benchmarking stdlib map...
-#
-# ##### With input Big (10 Million) #####
-# Name                                                  ips        average  deviation         median
-# map tail-recursive different argument order          5.09      196.48 ms     ±9.70%      191.18 ms
-# map tail-recursive                                   3.86      258.84 ms    ±22.05%      246.03 ms
-# stdlib map                                           2.87      348.36 ms     ±9.02%      345.21 ms
-# map simple body-recursive                            2.85      350.80 ms     ±9.03%      349.33 ms
-#
+# inputs: Big (1 Million), Bigger (5 Million), Middle (100 Thousand), Small (10 Thousand)
+# Estimated total run time: 2.40 min
+
+
+# Benchmarking body-recursive with input Big (1 Million)...
+# Benchmarking body-recursive with input Bigger (5 Million)...
+# Benchmarking body-recursive with input Middle (100 Thousand)...
+# Benchmarking body-recursive with input Small (10 Thousand)...
+# Benchmarking stdlib map with input Big (1 Million)...
+# Benchmarking stdlib map with input Bigger (5 Million)...
+# Benchmarking stdlib map with input Middle (100 Thousand)...
+# Benchmarking stdlib map with input Small (10 Thousand)...
+# Benchmarking tail-rec arg-order with input Big (1 Million)...
+# Benchmarking tail-rec arg-order with input Bigger (5 Million)...
+# Benchmarking tail-rec arg-order with input Middle (100 Thousand)...
+# Benchmarking tail-rec arg-order with input Small (10 Thousand)...
+# Benchmarking tail-recursive with input Big (1 Million)...
+# Benchmarking tail-recursive with input Bigger (5 Million)...
+# Benchmarking tail-recursive with input Middle (100 Thousand)...
+# Benchmarking tail-recursive with input Small (10 Thousand)...
+
+# ##### With input Big (1 Million) #####
+# Name                         ips        average  deviation         median         99th %
+# tail-rec arg-order         53.49       18.70 ms    ±22.70%       18.33 ms       24.16 ms
+# body-recursive             47.14       21.21 ms    ±22.89%       20.68 ms       28.15 ms
+# stdlib map                 46.46       21.52 ms    ±23.06%       21.05 ms       34.86 ms
+# tail-recursive             33.55       29.80 ms    ±17.55%       30.26 ms       51.55 ms
+
 # Comparison:
-# map tail-recursive different argument order          5.09
-# map tail-recursive                                   3.86 - 1.32x slower
-# stdlib map                                           2.87 - 1.77x slower
-# map simple body-recursive                            2.85 - 1.79x slower
-#
+# tail-rec arg-order         53.49
+# body-recursive             47.14 - 1.13x slower
+# stdlib map                 46.46 - 1.15x slower
+# tail-recursive             33.55 - 1.59x slower
+
+# Extended statistics:
+
+# Name                       minimum        maximum    sample size                     mode
+# tail-rec arg-order        17.47 ms       86.37 ms            26517.70 ms, 17.73 ms, 18.32
+# body-recursive            16.47 ms       79.96 ms            23320.17 ms, 20.88 ms, 20.78
+# stdlib map                16.69 ms       80.45 ms            23020.50 ms, 20.57 ms, 17.35
+# tail-recursive            23.85 ms       84.80 ms            166                 30.72 ms
+
+# Memory usage statistics:
+
+# Name                  Memory usage
+# tail-rec arg-order        28.74 MB
+# body-recursive            15.26 MB - 0.53x memory usage
+# stdlib map                15.26 MB - 0.53x memory usage
+# tail-recursive            28.74 MB - 1.00x memory usage
+
+# **All measurements for memory usage were the same**
+
+# ##### With input Bigger (5 Million) #####
+# Name                         ips        average  deviation         median         99th %
+# tail-rec arg-order          7.74      129.12 ms    ±24.38%      119.69 ms      233.75 ms
+# tail-recursive              7.12      140.38 ms    ±19.83%      138.44 ms      242.14 ms
+# stdlib map                  6.29      159.05 ms    ±13.77%      164.92 ms      212.35 ms
+# body-recursive              6.24      160.14 ms    ±14.23%      164.66 ms      214.37 ms
+
+# Comparison:
+# tail-rec arg-order          7.74
+# tail-recursive              7.12 - 1.09x slower
+# stdlib map                  6.29 - 1.23x slower
+# body-recursive              6.24 - 1.24x slower
+
+# Extended statistics:
+
+# Name                       minimum        maximum    sample size                     mode
+# tail-rec arg-order        87.42 ms      233.75 ms             39                     None
+# tail-recursive            95.46 ms      242.14 ms             36                     None
+# stdlib map                84.67 ms      212.35 ms             32                     None
+# body-recursive            85.14 ms      214.37 ms             31                     None
+
+# Memory usage statistics:
+
+# Name                  Memory usage
+# tail-rec arg-order       150.15 MB
+# tail-recursive           150.15 MB - 1.00x memory usage
+# stdlib map                76.29 MB - 0.51x memory usage
+# body-recursive            76.29 MB - 0.51x memory usage
+
+# **All measurements for memory usage were the same**
+
 # ##### With input Middle (100 Thousand) #####
-# Name                                                  ips        average  deviation         median
-# stdlib map                                         584.79        1.71 ms    ±16.20%        1.67 ms
-# map simple body-recursive                          581.89        1.72 ms    ±15.38%        1.68 ms
-# map tail-recursive different argument order        531.09        1.88 ms    ±17.41%        1.95 ms
-# map tail-recursive                                 471.64        2.12 ms    ±18.93%        2.13 ms
-#
+# Name                         ips        average  deviation         median         99th %
+# stdlib map                578.27        1.73 ms    ±62.47%        1.66 ms        2.14 ms
+# body-recursive            572.69        1.75 ms    ±59.60%        1.67 ms        2.29 ms
+# tail-rec arg-order        564.61        1.77 ms    ±41.54%        1.69 ms        2.58 ms
+# tail-recursive            517.07        1.93 ms    ±39.75%        1.88 ms        2.35 ms
+
 # Comparison:
-# stdlib map                                         584.79
-# map simple body-recursive                          581.89 - 1.00x slower
-# map tail-recursive different argument order        531.09 - 1.10x slower
-# map tail-recursive                                 471.64 - 1.24x slower
-#
-# ##### With input Small (1 Thousand) #####
-# Name                                                  ips        average  deviation         median
-# stdlib map                                        66.10 K       15.13 μs    ±58.17%       15.00 μs
-# map tail-recursive different argument order       62.46 K       16.01 μs    ±31.43%       15.00 μs
-# map simple body-recursive                         62.35 K       16.04 μs    ±60.37%       15.00 μs
-# map tail-recursive                                55.68 K       17.96 μs    ±30.32%       17.00 μs
-#
+# stdlib map                578.27
+# body-recursive            572.69 - 1.01x slower
+# tail-rec arg-order        564.61 - 1.02x slower
+# tail-recursive            517.07 - 1.12x slower
+
+# Extended statistics:
+
+# Name                       minimum        maximum    sample size                     mode
+# stdlib map                 1.63 ms       58.92 ms         2.86 K                  1.66 ms
+# body-recursive             1.64 ms       55.92 ms         2.83 K                  1.67 ms
+# tail-rec arg-order         1.62 ms       38.28 ms         2.80 K                  1.63 ms
+# tail-recursive             1.81 ms       40.11 ms         2.56 K                  1.83 ms
+
+# Memory usage statistics:
+
+# Name                  Memory usage
+# stdlib map                 1.53 MB
+# body-recursive             1.53 MB - 1.00x memory usage
+# tail-rec arg-order         1.80 MB - 1.18x memory usage
+# tail-recursive             1.80 MB - 1.18x memory usage
+
+# **All measurements for memory usage were the same**
+
+# ##### With input Small (10 Thousand) #####
+# Name                         ips        average  deviation         median         99th %
+# stdlib map                6.01 K      166.28 μs   ±118.09%         163 μs         233 μs
+# body-recursive            5.96 K      167.86 μs   ±171.25%         164 μs         216 μs
+# tail-recursive            5.40 K      185.09 μs   ±106.59%         182 μs         289 μs
+# tail-rec arg-order        4.96 K      201.42 μs   ±173.50%         190 μs         300 μs
+
 # Comparison:
-# stdlib map                                        66.10 K
-# map tail-recursive different argument order       62.46 K - 1.06x slower
-# map simple body-recursive                         62.35 K - 1.06x slower
-# map tail-recursive                                55.68 K - 1.19x slower
+# stdlib map                6.01 K
+# body-recursive            5.96 K - 1.01x slower
+# tail-recursive            5.40 K - 1.11x slower
+# tail-rec arg-order        4.96 K - 1.21x slower
+
+# Extended statistics:
+
+# Name                       minimum        maximum    sample size                     mode
+# stdlib map                  161 μs       33753 μs        29.68 K                   163 μs
+# body-recursive              161 μs       49162 μs        29.29 K                   164 μs
+# tail-recursive              175 μs       31944 μs        26.67 K                   177 μs
+# tail-rec arg-order          155 μs       52554 μs        24.41 K                   162 μs
+
+# Memory usage statistics:
+
+# Name                  Memory usage
+# stdlib map               156.85 KB
+# body-recursive           156.85 KB - 1.00x memory usage
+# tail-recursive           291.46 KB - 1.86x memory usage
+# tail-rec arg-order       291.46 KB - 1.86x memory usage
+
