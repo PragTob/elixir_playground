@@ -1,12 +1,12 @@
-alias Benchee.Formatters.{Console, HTML}
 map_fun = fn i -> i + 1 end
 
-inputs = %{
-  "Small (10 Thousand)" => Enum.to_list(1..10_000),
-  "Middle (100 Thousand)" => Enum.to_list(1..100_000),
-  "Big (1 Million)" => Enum.to_list(1..1_000_000),
-  "Bigger (5 Million)" => Enum.to_list(1..5_000_000)
-}
+inputs = [
+  {"Small (10 Thousand)", Enum.to_list(1..10_000)},
+  {"Middle (100 Thousand)",  Enum.to_list(1..100_000)},
+  {"Big (1 Million)", Enum.to_list(1..1_000_000)},
+  {"Bigger (5 Million)", Enum.to_list(1..5_000_000)},
+  {"Giant (25 Million)", Enum.to_list(1..25_000_000)}
+]
 
 Benchee.run(
   %{
@@ -17,9 +17,10 @@ Benchee.run(
   },
   memory_time: 2,
   inputs: inputs,
-  formatters: [Console, HTML],
-  console: [extended_statistics: true],
-  html: [file: "bench/output/tco_focussed_detailed.html"]
+  formatters: [
+    {Benchee.Formatters.Console, extended_statistics: true},
+    {Benchee.Formatters.HTML, file: "bench/output/tco_focussed_detailed.html"}
+  ]
 )
 
 # tobi@speedy:~/github/elixir_playground(master)$ mix run bench/tco_blog_post_focussed_inputs.exs
@@ -177,4 +178,3 @@ Benchee.run(
 # body-recursive           156.85 KB - 1.00x memory usage
 # tail-recursive           291.46 KB - 1.86x memory usage
 # tail-rec arg-order       291.46 KB - 1.86x memory usage
-
