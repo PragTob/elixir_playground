@@ -28,9 +28,8 @@ defmodule ElixirPlayground.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:benchee,      "~> 0.9"},
-      {:benchee_csv,  "~> 0.5"},
-      {:benchee_html, "~> 0.1"},
+      {:benchee,      "~> 0.14", github: "bencheeorg/benchee", override: true},
+      {:benchee_html, "~> 0.1", github: "bencheeorg/benchee_html"},
       {:credo,        "~> 0.4"}
     ]
   end
