@@ -31,6 +31,19 @@ defmodule BoardTest do
 
         assert @module.get(board, 4, 4) == :foo
       end
+
+      test "just stuff" do
+        board =
+          @module.new
+          |> @module.set(2, 7, :white)
+          |> @module.set(8, 2, :black)
+          |> @module.set(5, 6, :none)
+          |> @module.set(2, 7, :woops)
+
+        assert @module.get(board, 8, 2) == :black
+        assert @module.get(board, 5, 6) == :none
+        assert @module.get(board, 2, 7) == :woops
+      end
     end
   end)
 end
