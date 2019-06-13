@@ -1,0 +1,98 @@
+defmodule Board.Tuple1D do
+  @behaviour Board
+
+  @dimension 9
+  def new do
+    {
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    }
+  end
+
+  def get(board, x, y), do: elem(board, coordinate(x, y))
+
+  defp coordinate(x, y), do: @dimension * x + y
+
+  def set(board, x, y, value) do
+    put_elem(board, coordinate(x, y), value)
+  end
+end
