@@ -1,7 +1,14 @@
 defmodule BoardTest do
   use ExUnit.Case, async: true
 
-  @modules [Board.List2D, Board.List1D, Board.MapTuple, Board.Tuple2D, Board.Tuple1D]
+  @modules [
+    Board.List2D,
+    Board.List1D,
+    Board.MapTuple,
+    Board.Tuple2D,
+    Board.Tuple1D,
+    Board.MapTupleFull
+  ]
   # for module <- @modules do
   Enum.each(@modules, fn module ->
     @module module
