@@ -5,6 +5,7 @@ defmodule Magic do
     Board.MapTuple,
     Board.MapTupleHalfFull,
     Board.MapTupleFull,
+    Board.Map2D,
     Board.Tuple1D,
     Board.Tuple2D
   ]
