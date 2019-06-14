@@ -3,6 +3,7 @@ defmodule Magic do
     Board.List1D,
     Board.List2D,
     Board.MapTuple,
+    Board.MapTupleHalfFull,
     Board.MapTupleFull,
     Board.Tuple1D,
     Board.Tuple2D
@@ -39,6 +40,14 @@ defmodule Magic do
     end)
   end
 
+  defmacro board_creation() do
+    Enum.map(@board_modules, fn module ->
+      quote do
+        {unquote(module), fn -> unquote(module).new() end}
+      end
+    end)
+  end
+
   defmacro mixed_bag() do
     Enum.map(@board_modules, fn module ->
       quote do
@@ -69,7 +78,7 @@ defmodule BoardBenchmark do
   # can't use macros top level if defined in the same context and I want to use them in the same context
   def go do
     Enum.each([{0, 0}, {4, 4}, {8, 8}], fn {x, y} ->
-      headline("get(#{x}, #{y}")
+      headline("get(#{x}, #{y})")
 
       Benchee.run(get(x, y),
         time: 0.5,
@@ -88,11 +97,23 @@ defmodule BoardBenchmark do
       )
     end)
 
+    headline("mixed bag (3 sets, 3 gets)")
+
     Benchee.run(mixed_bag(),
       time: 0.5,
       warmup: 0.1,
+      memory_time: 0.1,
       print: [benchmarking: false, configuration: false],
       formatters: [{Benchee.Formatters.Console, extended_statistics: true}]
+    )
+
+    headline("Board creation")
+
+    Benchee.run(board_creation(),
+      time: 0.5,
+      warmup: 0.1,
+      memory_time: 0.1,
+      print: [benchmarking: false, configuration: false]
     )
   end
 

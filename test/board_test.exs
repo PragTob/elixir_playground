@@ -7,7 +7,8 @@ defmodule BoardTest do
     Board.MapTuple,
     Board.Tuple2D,
     Board.Tuple1D,
-    Board.MapTupleFull
+    Board.MapTupleFull,
+    Board.MapTupleHalfFull
   ]
   # for module <- @modules do
   Enum.each(@modules, fn module ->

@@ -2,6 +2,8 @@ defmodule Board.MapTuple do
   @behaviour Board
 
   def new do
+    # this is a bit unfair to all the others because it always
+    # being empty can be a quite sharp speed advantage
     %{}
   end
 
