@@ -41,29 +41,19 @@ defmodule Magic do
     end)
   end
 
-  defmacro board_creation() do
-    Enum.map(@board_modules, fn module ->
-      quote do
-        {unquote(module), fn -> unquote(module).new() end}
-      end
-    end)
-  end
-
   defmacro creating_getting_and_setting_full_board do
     Enum.map(@board_modules, fn module ->
       quote do
         {unquote(module),
-         fn ->
-           board = unquote(module).new()
-
-           # mapping so it sholdn't potentially optimize away return values
-           Enum.flat_map(0..8, fn x ->
-             Enum.map(0..8, fn y ->
-               board = unquote(module).set(board, x, y, :value)
-               unquote(module).get(board, x, y)
-             end)
-           end)
-         end}
+         {fn board ->
+            # maping so it sholdn't potentially optimize away return values
+            Enum.flat_map(0..8, fn x ->
+              Enum.map(0..8, fn y ->
+                board = unquote(module).set(board, x, y, :value)
+                unquote(module).get(board, x, y)
+              end)
+            end)
+          end, before_scenario: fn _ -> unquote(module).new end}}
       end
     end)
   end
@@ -125,15 +115,6 @@ defmodule BoardBenchmark do
       memory_time: 0.1,
       print: [benchmarking: false, configuration: false],
       formatters: [{Benchee.Formatters.Console, extended_statistics: true}]
-    )
-
-    headline("Board creation")
-
-    Benchee.run(board_creation(),
-      time: 0.5,
-      warmup: 0.1,
-      memory_time: 0.1,
-      print: [benchmarking: false, configuration: false]
     )
 
     headline("Creating, getting and setting full board")
