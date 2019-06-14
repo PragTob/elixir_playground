@@ -9,7 +9,9 @@ defmodule BoardTest do
     Board.Tuple1D,
     Board.MapTupleFull,
     Board.MapTupleHalfFull,
-    Board.Map2D
+    Board.Map2D,
+    Board.ETSSet,
+    Board.ETSOrderedSet
   ]
   # for module <- @modules do
   Enum.each(@modules, fn module ->

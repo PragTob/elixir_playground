@@ -7,7 +7,9 @@ defmodule Magic do
     Board.MapTupleFull,
     Board.Map2D,
     Board.Tuple1D,
-    Board.Tuple2D
+    Board.Tuple2D,
+    Board.ETSSet,
+    Board.ETSOrderedSet
   ]
 
   defmacro get(x, y) do
@@ -20,7 +22,7 @@ defmodule Magic do
               unquote(x),
               unquote(y)
             )
-          end, before_scenario: fn _ -> unquote(module).new end}}
+          end, before_each: fn _ -> unquote(module).new end}}
       end
     end)
   end
@@ -36,7 +38,7 @@ defmodule Magic do
               unquote(y),
               unquote(value)
             )
-          end, before_scenario: fn _ -> unquote(module).new end}}
+          end, before_each: fn _ -> unquote(module).new end}}
       end
     end)
   end
@@ -53,7 +55,7 @@ defmodule Magic do
                 unquote(module).get(board, x, y)
               end)
             end)
-          end, before_scenario: fn _ -> unquote(module).new end}}
+          end, before_each: fn _ -> unquote(module).new end}}
       end
     end)
   end
@@ -75,7 +77,7 @@ defmodule Magic do
 
             # assign and return so no fancy potential compiler optimization could go "woops you don't need those"
             {val1, val2, val3}
-          end, before_scenario: fn _ -> unquote(module).new end}}
+          end, before_each: fn _ -> unquote(module).new end}}
       end
     end)
   end
