@@ -7,11 +7,9 @@ defmodule Board.List1D do
     Enum.map(1..@number_of_fields, fn _ -> nil end)
   end
 
-  def get(board, x, y), do: Enum.at(board, coordinate(x, y))
-
-  defp coordinate(x, y), do: @dimension * x + y
+  def get(board, x, y), do: Enum.at(board, @dimension * x + y)
 
   def set(board, x, y, value) do
-    List.replace_at(board, coordinate(x, y), value)
+    List.replace_at(board, @dimension * x + y, value)
   end
 end

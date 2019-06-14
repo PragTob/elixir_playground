@@ -48,6 +48,25 @@ defmodule Magic do
     end)
   end
 
+  defmacro creating_getting_and_setting_full_board do
+    Enum.map(@board_modules, fn module ->
+      quote do
+        {unquote(module),
+         fn ->
+           board = unquote(module).new()
+
+           # mapping so it sholdn't potentially optimize away return values
+           Enum.flat_map(0..8, fn x ->
+             Enum.map(0..8, fn y ->
+               board = unquote(module).set(board, x, y, :value)
+               unquote(module).get(board, x, y)
+             end)
+           end)
+         end}
+      end
+    end)
+  end
+
   defmacro mixed_bag() do
     Enum.map(@board_modules, fn module ->
       quote do
@@ -114,6 +133,15 @@ defmodule BoardBenchmark do
       warmup: 0.1,
       memory_time: 0.1,
       print: [benchmarking: false, configuration: false]
+    )
+
+    headline("Creating, getting and setting full board")
+
+    Benchee.run(creating_getting_and_setting_full_board(),
+      time: 3,
+      warmup: 0.5,
+      memory_time: 0.1,
+      formatters: [{Benchee.Formatters.Console, extended_statistics: true}]
     )
   end
 
