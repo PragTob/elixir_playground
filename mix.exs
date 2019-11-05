@@ -2,12 +2,14 @@ defmodule ElixirPlayground.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :elixir_playground,
-     version: "0.0.1",
-     elixir: "~> 1.2",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps()]
+    [
+      app: :elixir_playground,
+      version: "0.0.1",
+      elixir: "~> 1.2",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application
@@ -28,11 +30,10 @@ defmodule ElixirPlayground.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:benchee,      "~> 1.0"},
+      {:benchee, "~> 1.0"},
       {:benchee_html, "~> 1.0"},
-      {:credo,        "~> 0.4"}
+      {:credo, "~> 0.4"},
+      {:mox, "~> 0.5.1"}
     ]
   end
-
-
 end
