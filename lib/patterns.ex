@@ -1,14 +1,17 @@
 defmodule Patterns do
   def greet(%{name: name, age: age}) do
-    IO.puts "Hi there #{name}, what's up at #{age}?"
+    IO.puts("Hi there #{name}, what's up at #{age}?")
   end
-  def greet(%{name: "Peter Schröder"}) do
-    IO.puts "Hi Peter, thanks for onruby! <3"
+
+  def greet(%{name: "Emily"}) do
+    IO.puts("Thanks for running Øredev for so long!")
   end
+
   def greet(%{name: name}) do
-    IO.puts "Hi there #{name}"
+    IO.puts("Hi there #{name}")
   end
+
   def greet(_) do
-    IO.puts "Hi"
+    IO.puts("Hi")
   end
 end
