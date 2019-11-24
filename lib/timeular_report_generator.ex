@@ -33,7 +33,9 @@ defmodule TimeularReportGenerator do
   end
 
   defp parse_time(time_stamp) do
-    NaiveDateTime.from_iso8601!(time_stamp)
+    time_stamp
+    |> NaiveDateTime.from_iso8601!()
+    |> Timex.Timezone.convert("Europe/Berlin")
   end
 
   defp total_time(times) do
@@ -61,7 +63,7 @@ defmodule TimeularReportGenerator do
     |> Enum.map(fn {start, finish} ->
       "#{time_of(start)} - #{time_of(finish)}"
     end)
-    |> Enum.join("\n")
+    |> Enum.join("\n\n")
   end
 
   defp time_of(date_time) do

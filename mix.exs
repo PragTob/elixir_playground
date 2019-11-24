@@ -12,13 +12,6 @@ defmodule ElixirPlayground.Mixfile do
     ]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
-  def application do
-    [applications: [:logger]]
-  end
-
   # Dependencies can be Hex packages:
   #
   #   {:mydep, "~> 0.3.0"}
@@ -34,7 +27,8 @@ defmodule ElixirPlayground.Mixfile do
       {:benchee_html, "~> 1.0"},
       {:credo, "~> 0.4"},
       {:mox, "~> 0.5.1"},
-      {:jason, "~> 1.1"}
+      {:jason, "~> 1.1"},
+      {:timex, "~> 3.6"}
     ]
   end
 end
