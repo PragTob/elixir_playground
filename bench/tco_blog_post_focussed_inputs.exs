@@ -19,7 +19,8 @@ Benchee.run(
   inputs: inputs,
   formatters: [
     Benchee.Formatters.Console,
-    {Benchee.Formatters.HTML, file: "bench/output/tco_focussed_detailed_inputs_gc.html", auto_open: false}
+    {Benchee.Formatters.HTML,
+     file: "bench/output/tco_focussed_detailed_inputs_gc.html", auto_open: false}
   ],
   after_each: fn _ -> :erlang.garbage_collect() end
 )

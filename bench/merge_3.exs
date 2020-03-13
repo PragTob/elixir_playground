@@ -1,20 +1,40 @@
-base_map = (0..50)
-           |> Enum.zip(300..350)
-           |> Enum.into(%{})
+base_map =
+  0..50
+  |> Enum.zip(300..350)
+  |> Enum.into(%{})
 
 # In the end those are 2 maps with 51 flat keys plus these
-orig = Map.merge base_map, %{150 => %{1 => 1, 2 => 2}, 155 => %{y: :x}, 170 => %{"foo" => "bar"}, z: %{ x: 4, y: %{a: 1, b: %{c: 2}, d: %{"hey" => "ho"}}}, a: %{b: %{c: %{a: 99, d: "foo", e: 2}}, m: [33], i: 99, y: "bar"}, b: %{y: [23, 87]}, z: %{xy: %{y: :x}}}
-new = Map.merge base_map, %{150 => %{3 => 3}, 160 => %{a: "b"}, z: %{ xui: [44], y: %{b: %{c: 77, d: 55}, d: %{"ho" => "hey", "du" => "nu", "hey" => "ha"}}}, a: %{b: %{c: %{a: 1, b: 2, d: "bar"}}, m: 12, i: 102}, b: %{ x: 65, y: [23]}, z: %{ xy: %{x: :y}}}
+orig =
+  Map.merge(base_map, %{
+    150 => %{1 => 1, 2 => 2},
+    155 => %{y: :x},
+    170 => %{"foo" => "bar"},
+    z: %{x: 4, y: %{a: 1, b: %{c: 2}, d: %{"hey" => "ho"}}},
+    a: %{b: %{c: %{a: 99, d: "foo", e: 2}}, m: [33], i: 99, y: "bar"},
+    b: %{y: [23, 87]},
+    z: %{xy: %{y: :x}}
+  })
 
-simple = fn(_key, _base, override) -> override end
+new =
+  Map.merge(base_map, %{
+    150 => %{3 => 3},
+    160 => %{a: "b"},
+    z: %{xui: [44], y: %{b: %{c: 77, d: 55}, d: %{"ho" => "hey", "du" => "nu", "hey" => "ha"}}},
+    a: %{b: %{c: %{a: 1, b: 2, d: "bar"}}, m: 12, i: 102},
+    b: %{x: 65, y: [23]},
+    z: %{xy: %{x: :y}}
+  })
 
-Benchee.run %{
-  "Map.merge/2"           => fn -> Map.merge orig, new end,
-  "Map.merge/3"           => fn -> Map.merge orig, new, simple end,
-}, formatters: [&Benchee.Formatters.Console.output/1,
-                &Benchee.Formatters.HTML.output/1],
-   html: %{file: "bench/output/merge_3.html"}
+simple = fn _key, _base, override -> override end
 
+Benchee.run(
+  %{
+    "Map.merge/2" => fn -> Map.merge(orig, new) end,
+    "Map.merge/3" => fn -> Map.merge(orig, new, simple) end
+  },
+  formatters: [&Benchee.Formatters.Console.output/1, &Benchee.Formatters.HTML.output/1],
+  html: %{file: "bench/output/merge_3.html"}
+)
 
 # tobi@happy ~/github/elixir_playground $ mix run bench/deep_merge.exs
 # Erlang/OTP 19 [erts-8.0.2] [source-753b9b9] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]

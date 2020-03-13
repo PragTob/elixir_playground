@@ -17,7 +17,7 @@ defmodule OldDeepMerge do
   %{a: %{b: %{c: %{d: "bar", e: 2}}}}
   """
   def deep_merge_specific(base_map, override) do
-    Map.merge base_map, override, &deep_merge_resolver/3
+    Map.merge(base_map, override, &deep_merge_resolver/3)
   end
 
   @doc """
@@ -47,7 +47,7 @@ defmodule OldDeepMerge do
   %{a: %{b: %{c: %{d: "bar", e: 2}}}}
   """
   def deep_merge(base_map, override) do
-    deep_merge(base_map, override, fn(_key, _base, override) -> override end)
+    deep_merge(base_map, override, fn _key, _base, override -> override end)
   end
 
   @doc """
@@ -79,21 +79,24 @@ defmodule OldDeepMerge do
     # do_deep_merge function to do the merges and refer to that one
     # when really merging within the built functions
 
-    Map.merge base_map, override_map, build_deep_merge_resolver(fun)
+    Map.merge(base_map, override_map, build_deep_merge_resolver(fun))
   end
 
   defp build_deep_merge_resolver(fun) do
     fn
       _key, base_map, override_map when is_map(base_map) and is_map(override_map) ->
         deep_merge(base_map, override_map, fun)
+
       key, base, override ->
         fun.(key, base, override)
     end
   end
 
-  defp deep_merge_resolver(_key, base_map, override_map) when is_map(base_map) and is_map(override_map) do
+  defp deep_merge_resolver(_key, base_map, override_map)
+       when is_map(base_map) and is_map(override_map) do
     deep_merge_specific(base_map, override_map)
   end
+
   defp deep_merge_resolver(_key, _base, override) do
     override
   end

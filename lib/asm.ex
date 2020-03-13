@@ -11,7 +11,7 @@ defmodule ASM do
     """
 
     [{_, beam}] = Code.compile_string(code)
-    {:ok,{_,[{:abstract_code,{_,abstract_code}}]}} = :beam_lib.chunks(beam,[:abstract_code])
+    {:ok, {_, [{:abstract_code, {_, abstract_code}}]}} = :beam_lib.chunks(beam, [:abstract_code])
     {:ok, _module, asm} = :compile.forms(abstract_code, [:to_asm])
     IO.inspect(asm)
   end

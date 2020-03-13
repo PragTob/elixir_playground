@@ -1,27 +1,17 @@
 list = Enum.to_list(1..10_000)
-map_fun = fn(i) -> i + 1 end
+map_fun = fn i -> i + 1 end
 
-Benchee.run %{time: 10, warmup: 10}, [
-  {"stdlib map",
-  fn -> Enum.map(list, map_fun) end},
-  {"map with TCO reverse",
-   fn -> MyMap.map_tco(list, map_fun) end},
-  {"exactly_like_my_map",
-   fn -> MyMap.exactly_like_my_map(list, map_fun) end},
-  {"map with TCO reverse new acc",
-   fn -> MyMap.map_tco_new_acc(list, map_fun) end},
-  {"map with TCO reverse new arg order",
-    fn -> MyMap.map_tco_arg_order(list, map_fun) end},
-  {"my_map",
-   fn -> MyMap.my_map(list, map_fun) end},
-  {"map with TCO reverse at acc",
-   fn -> MyMap.map_tco_reverse_at_acc(list, map_fun) end},
-  {"map simple without TCO",
-   fn -> MyMap.map_body(list, map_fun) end},
-  {"map TCO no reverse",
-   fn -> MyMap.map_tco_no_reverse(list, map_fun) end}
-]
-
+Benchee.run(%{time: 10, warmup: 10}, [
+  {"stdlib map", fn -> Enum.map(list, map_fun) end},
+  {"map with TCO reverse", fn -> MyMap.map_tco(list, map_fun) end},
+  {"exactly_like_my_map", fn -> MyMap.exactly_like_my_map(list, map_fun) end},
+  {"map with TCO reverse new acc", fn -> MyMap.map_tco_new_acc(list, map_fun) end},
+  {"map with TCO reverse new arg order", fn -> MyMap.map_tco_arg_order(list, map_fun) end},
+  {"my_map", fn -> MyMap.my_map(list, map_fun) end},
+  {"map with TCO reverse at acc", fn -> MyMap.map_tco_reverse_at_acc(list, map_fun) end},
+  {"map simple without TCO", fn -> MyMap.map_body(list, map_fun) end},
+  {"map TCO no reverse", fn -> MyMap.map_tco_no_reverse(list, map_fun) end}
+])
 
 # tobi@happy ~/github/elixir_playground $ mix run bench/my_map_bench.exs
 # Benchmarking stdlib map...

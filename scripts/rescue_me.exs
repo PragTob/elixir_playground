@@ -1,19 +1,19 @@
 defmodule RescueMe do
   def run do
-    spawn_link fn ->
+    spawn_link(fn ->
       try do
         raise "lol"
       rescue
         e ->
-          IO.puts "error"
-          reraise e, System.stacktrace
+          IO.puts("error")
+          reraise e, System.stacktrace()
       end
-    end
+    end)
   end
 end
 
 try do
-  RescueMe.run
+  RescueMe.run()
 rescue
-  _ -> IO.puts "I rescued you"
+  _ -> IO.puts("I rescued you")
 end

@@ -9,11 +9,12 @@ defmodule MyCounter do
 
   def val(pid, timeout \\ 5000) do
     unique_reference = make_ref()
-    send pid, {:val, self(), unique_reference}
+    send(pid, {:val, self(), unique_reference})
 
     receive do
       {^unique_reference, val} -> val
-    after timeout -> exit(:timeout)
+    after
+      timeout -> exit(:timeout)
     end
   end
 
@@ -23,10 +24,14 @@ defmodule MyCounter do
 
   defp listen(value) do
     receive do
-      :inc -> listen value + 1
-      :dec -> listen value - 1
+      :inc ->
+        listen(value + 1)
+
+      :dec ->
+        listen(value - 1)
+
       {:val, sender, reference} ->
-        send sender, {reference, value}
+        send(sender, {reference, value})
         listen(value)
     end
   end

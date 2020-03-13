@@ -1,10 +1,10 @@
 defmodule Statistics do
   def compute_mode(samples) do
     samples
-    |> Enum.reduce(%{}, fn(sample, counts) ->
-         Map.update(counts, sample, 1, fn(old_value) -> old_value + 1 end)
-       end)
-    |> Enum.max_by(fn({_sample, occurences}) -> occurences end)
+    |> Enum.reduce(%{}, fn sample, counts ->
+      Map.update(counts, sample, 1, fn old_value -> old_value + 1 end)
+    end)
+    |> Enum.max_by(fn {_sample, occurences} -> occurences end)
   end
 
   @doc """
@@ -22,9 +22,9 @@ defmodule Statistics do
   """
   def compute_mode_advanced(samples) do
     samples
-    |> Enum.reduce(%{}, fn(sample, counts) ->
-         Map.update(counts, sample, 1, fn(old_value) -> old_value + 1 end)
-       end)
+    |> Enum.reduce(%{}, fn sample, counts ->
+      Map.update(counts, sample, 1, fn old_value -> old_value + 1 end)
+    end)
     |> max_multiple
     |> decide_mode
   end
@@ -33,14 +33,17 @@ defmodule Statistics do
     max_multiple(Enum.to_list(map), [{nil, 0}])
   end
 
-  defp max_multiple([{sample, occurence} | rest], ref =[{_sample, max_occurence} | _]) do
-    new_ref = cond do
-                occurence < max_occurence  -> ref
-                occurence == max_occurence -> [{sample, occurence} | ref]
-                true                       -> [{sample, occurence}]
-              end
+  defp max_multiple([{sample, occurence} | rest], ref = [{_sample, max_occurence} | _]) do
+    new_ref =
+      cond do
+        occurence < max_occurence -> ref
+        occurence == max_occurence -> [{sample, occurence} | ref]
+        true -> [{sample, occurence}]
+      end
+
     max_multiple(rest, new_ref)
   end
+
   defp max_multiple([], ref) do
     ref
   end
@@ -48,7 +51,8 @@ defmodule Statistics do
   defp decide_mode([{nil, _}]), do: nil
   defp decide_mode([{_, 1} | _rest]), do: nil
   defp decide_mode([{sample, _occurence}]), do: sample
+
   defp decide_mode(multi_modes) do
-    Enum.map multi_modes, fn({sample, _}) -> sample end
+    Enum.map(multi_modes, fn {sample, _} -> sample end)
   end
 end

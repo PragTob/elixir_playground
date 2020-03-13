@@ -1,10 +1,14 @@
 number = 10_000_000
 
-Benchee.run %{
-  "is_even?" => fn -> Number.is_even?(number) end,
-  "is_even_tco?" => fn -> Number.is_even_tco?(number) end,
-  "is_even_tco_new_acc?" => fn -> Number.is_even_tco_new_acc?(number) end,
-}, warmup: 10, time: 10
+Benchee.run(
+  %{
+    "is_even?" => fn -> Number.is_even?(number) end,
+    "is_even_tco?" => fn -> Number.is_even_tco?(number) end,
+    "is_even_tco_new_acc?" => fn -> Number.is_even_tco_new_acc?(number) end
+  },
+  warmup: 10,
+  time: 10
+)
 
 # tobi@speedy ~/github/elixir_playground $ mix run bench/is_even.exs 
 # Compiling 9 files (.ex)

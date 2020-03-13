@@ -3,12 +3,13 @@ defmodule FlatMap do
   # iex> FlatMap.flat_map([:a, :b, :c], fn(x) -> [x, x] end)
   # [:a, :a, :b, :b, :c, :c]
   def flat_map(enumerable, fun) when is_function(fun, 1) do
-    Enum.reduce(enumerable, [], fn(entry, acc) ->
+    Enum.reduce(enumerable, [], fn entry, acc ->
       case fun.(entry) do
         list when is_list(list) -> :lists.reverse(list, acc)
         other -> Enum.reduce(other, acc, &[&1 | &2])
       end
-    end) |> :lists.reverse
+    end)
+    |> :lists.reverse()
   end
 
   # v2

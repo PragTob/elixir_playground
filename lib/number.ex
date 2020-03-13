@@ -13,6 +13,7 @@ defmodule Number do
   false
   """
   def is_even?(0), do: true
+
   def is_even?(n) do
     !is_even?(n - 1)
   end
@@ -32,6 +33,7 @@ defmodule Number do
   """
   def is_even_tco?(n, acc \\ true)
   def is_even_tco?(0, acc), do: acc
+
   def is_even_tco?(n, acc) do
     is_even_tco?(n - 1, !acc)
   end
@@ -51,8 +53,9 @@ defmodule Number do
   """
   def is_even_tco_new_acc?(n, acc \\ true)
   def is_even_tco_new_acc?(0, acc), do: acc
+
   def is_even_tco_new_acc?(n, acc) do
-    new_n   = n - 1
+    new_n = n - 1
     new_acc = !acc
     is_even_tco_new_acc?(new_n, new_acc)
   end
