@@ -3,6 +3,8 @@ defmodule MoxTest do
 
   import Mox
 
+  @moduletag :skip
+
   setup :verify_on_exit!
 
   test "it woofs" do
