@@ -35,9 +35,10 @@ defmodule PN do
 
   @operands [@plus, @minus, @multiplication, @division]
 
+  @notation_separator " "
   def evaluate(notation) do
     notation
-    |> String.split(" ")
+    |> String.split(@notation_separator)
     |> Enum.map(&normalize/1)
     |> do_eval
   end
