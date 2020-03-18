@@ -35,53 +35,51 @@ defmodule PN do
   def evaluate(notation) do
     notation
     |> String.split(" ")
-    |> Enum.map(fn element ->
-      if operand?(element) do
-        element
-      else
-        String.to_integer(element)
-      end
-    end)
+    |> Enum.map(&normalize/1)
     |> do_eval
   end
 
-  def do_eval([value]) do
+  defp normalize(element) when element in @operands do
+    element
+  end
+
+  defp normalize(element) do
+    String.to_integer(element)
+  end
+
+  defp do_eval([value]) do
     value
   end
 
-  def do_eval([_a, b, _c | _tail] = list) when b in @operands do
+  defp do_eval([_a, b, _c | _tail] = list) when b in @operands do
     list
   end
 
-  def do_eval([first, second, "-"]) do
+  defp do_eval([first, second, "-"]) do
     first - second
   end
 
-  def do_eval([first, second, "+"]) do
+  defp do_eval([first, second, "+"]) do
     first + second
   end
 
-  def do_eval([first, second, "*"]) do
+  defp do_eval([first, second, "*"]) do
     first * second
   end
 
-  def do_eval([first, second, "/"]) do
+  defp do_eval([first, second, "/"]) do
     first / second
   end
 
-  def do_eval([a, b, c | tail]) when c in @operands do
+  defp do_eval([a, b, c | tail]) when c in @operands do
     do_eval([do_eval([a, b, c]) | tail])
   end
 
-  def do_eval([a, b, c | tail]) do
+  defp do_eval([a, b, c | tail]) do
     do_eval([a | do_eval([b, c | tail])])
   end
 
-  def do_eval(value) do
+  defp do_eval(value) do
     value
-  end
-
-  def operand?(c) do
-    Enum.member?(@operands, c)
   end
 end
