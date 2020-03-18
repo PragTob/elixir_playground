@@ -28,9 +28,12 @@ defmodule PN do
   * no need to worry about broken inputs
   """
 
-  require IEx
+  @plus "+"
+  @minus "-"
+  @multiplication "*"
+  @division "/"
 
-  @operands ["+", "-", "*", "/"]
+  @operands [@plus, @minus, @multiplication, @division]
 
   def evaluate(notation) do
     notation
@@ -55,19 +58,19 @@ defmodule PN do
     list
   end
 
-  defp do_eval([first, second, "-"]) do
+  defp do_eval([first, second, @minus]) do
     first - second
   end
 
-  defp do_eval([first, second, "+"]) do
+  defp do_eval([first, second, @plus]) do
     first + second
   end
 
-  defp do_eval([first, second, "*"]) do
+  defp do_eval([first, second, @multiplication]) do
     first * second
   end
 
-  defp do_eval([first, second, "/"]) do
+  defp do_eval([first, second, @division]) do
     first / second
   end
 
