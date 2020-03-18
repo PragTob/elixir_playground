@@ -69,33 +69,17 @@ defmodule PN do
     first / second
   end
 
-  def do_eval([a, b, c | tail] = list) when c in @operands do
-    IO.inspect(list)
-    do_eval(IO.inspect([do_eval([a, b, c]) | tail], label: "inner operand"))
+  def do_eval([a, b, c | tail]) when c in @operands do
+    do_eval([do_eval([a, b, c]) | tail])
   end
 
-  def do_eval([a, b, c | tail] = list) do
-    IO.inspect(list)
-
-    do_eval(IO.inspect([a | do_eval([b, c | tail])], label: "no operand"))
+  def do_eval([a, b, c | tail]) do
+    do_eval([a | do_eval([b, c | tail])])
   end
 
   def do_eval(value) do
     value
   end
-
-  # def do_eval(input_list) do
-  #   IO.inspect(input_list, label: "input list::")
-  #   [a, b, c | tail] = input_list
-
-  #   if(operand?(c)) do
-  #     do_eval([do_eval([a, b, c]) | tail]) |> IO.inspect()
-  #   else
-  #     # require IEx
-  #     # IEx.pry()
-  #     do_eval([a, do_eval([b, c | tail])])
-  #   end
-  # end
 
   def operand?(c) do
     Enum.member?(@operands, c)
