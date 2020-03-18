@@ -1,6 +1,7 @@
 defmodule PNTest do
   use ExUnit.Case, async: true
 
+  # Same interface would best be enforced via behavior, but seems overkill as of now
   @modules [PN, PN2]
 
   @test_cases %{
