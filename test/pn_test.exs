@@ -1,7 +1,7 @@
 defmodule PNTest do
   use ExUnit.Case, async: true
 
-  import PN
+  @modules [PN, PN2]
 
   @test_cases %{
     "1" => 1,
@@ -14,12 +14,18 @@ defmodule PNTest do
     "10 9 8 7 - + + 1 1 + /" => 10
   }
 
-  for {notation, result} <- @test_cases do
-    @notation notation
-    @result result
+  for module <- @modules do
+    @module module
 
-    test "'#{@notation}' evaluates to #{result}" do
-      assert evaluate(@notation) == @result
+    describe "#{@module}" do
+      for {notation, result} <- @test_cases do
+        @notation notation
+        @result result
+
+        test "'#{@notation}' evaluates to #{result}" do
+          assert @module.evaluate(@notation) == @result
+        end
+      end
     end
   end
 end
