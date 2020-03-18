@@ -32,10 +32,10 @@ defmodule PN do
   @minus "-"
   @multiplication "*"
   @division "/"
-
   @operands [@plus, @minus, @multiplication, @division]
 
   @notation_separator " "
+
   def evaluate(notation) do
     notation
     |> String.split(@notation_separator)
@@ -55,6 +55,10 @@ defmodule PN do
     value
   end
 
+  # We might advance further in the list and basically bite off more operands than we can chew
+  # in that case the correct call is to return back to the next higher layer and let it pick the operato
+  # up and deal with it
+  # Needs to be up here first, to avoid dropping down into the others
   defp do_eval([_a, b, _c | _tail] = list) when b in @operands do
     list
   end
@@ -83,6 +87,8 @@ defmodule PN do
     do_eval([a | do_eval([b, c | tail])])
   end
 
+  # If none of the ones before matched, then we're not ready for evaluation by ourself,
+  # and the next higher call should go and deal with us.
   defp do_eval(value) do
     value
   end
