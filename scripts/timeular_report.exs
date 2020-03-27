@@ -1,2 +1,2 @@
-month_content = File.read!("timeular.json")
+month_content = File.read!("full_timeular.json")
 TimeularReportGenerator.create(month_content)
