@@ -1,5 +1,5 @@
 defmodule TimeularReportGenerator do
-  @client_activity_name "Working Client 1 (On-AG)"
+  @client_activity_name "Client Matestack OSS"
   def create(json_string) do
     times = sorted_list_of_times(json_string)
 
@@ -47,15 +47,34 @@ defmodule TimeularReportGenerator do
   defp daily_reports(times) do
     times
     |> Enum.group_by(fn {start_time, _} -> NaiveDateTime.to_date(start_time) end)
+    |> Enum.sort_by(fn {day, _slices} -> Date.to_erl(day) end)
     |> Enum.map(&format_day/1)
     |> Enum.join("\n")
   end
 
   defp format_day({day, slices}) do
     """
-    ### #{day}
+    ### #{day} (#{hour_display(total_time(slices))} h)
     #{format_slices(slices)}
     """
+  end
+
+  defp hour_display(time) do
+    minutes = div(time, 60)
+    hours = div(minutes, 60)
+
+    leftover_minutes = rem(minutes, 60)
+    leftover_seconds = rem(time, 60)
+
+    "#{hours}:#{two_numbers(leftover_minutes)}:#{two_numbers(leftover_seconds)}"
+  end
+
+  defp two_numbers(number) when number < 10 do
+    "0#{number}"
+  end
+
+  defp two_numbers(number) do
+    number
   end
 
   defp format_slices(slices) do
@@ -63,7 +82,7 @@ defmodule TimeularReportGenerator do
     |> Enum.map(fn {start, finish} ->
       "#{time_of(start)} - #{time_of(finish)}"
     end)
-    |> Enum.join("\n\n")
+    |> Enum.join("\n")
   end
 
   defp time_of(date_time) do
@@ -77,7 +96,7 @@ defmodule TimeularReportGenerator do
 
     """
     ---------------------------------------------------------------
-    Total Time: #{Float.round(total_hours, 2)}h (rounded up: #{round_up(total_hours)}h)
+    Total Time: #{hour_display(total_time)} h (rounded up: #{round_up(total_hours)} h)
     """
   end
 
