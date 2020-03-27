@@ -23,6 +23,7 @@ defmodule ElixirPlayground.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
+      {:assertions, "~> 0.10", only: :test},
       {:benchee, "~> 1.0"},
       {:benchee_html, "~> 1.0"},
       {:credo, "~> 0.4"},

@@ -5,6 +5,9 @@ defmodule SecretSantaTest do
   import StreamData
   import SecretSanta
 
+  require Assertions
+  import Assertions, only: [assert_lists_equal: 2]
+
   describe "draw/1" do
     property "assignments are the same size as the input" do
       check all participants <- participant_list() do
@@ -18,7 +21,7 @@ defmodule SecretSantaTest do
         assignment = draw(participants)
 
         givers = Map.keys(assignment)
-        assert Enum.sort(givers) == Enum.sort(participants)
+        assert_lists_equal(givers, participants)
       end
     end
 
@@ -26,8 +29,8 @@ defmodule SecretSantaTest do
       check all participants <- participant_list() do
         assignment = draw(participants)
 
-        receiver = Map.values(assignment)
-        assert Enum.sort(receiver) == Enum.sort(participants)
+        receivers = Map.values(assignment)
+        assert_lists_equal(receivers, participants)
       end
     end
 
