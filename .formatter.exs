@@ -6,5 +6,6 @@
     "mix/**/*.{ex,exs}",
     "./mix.exs",
     "scripts/**/*.{ex,exs}"
-  ]
+  ],
+  import_deps: [:stream_data]
 ]

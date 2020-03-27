@@ -28,6 +28,7 @@ defmodule ElixirPlayground.Mixfile do
       {:credo, "~> 0.4"},
       {:ex_guard, "~> 1.3", only: :dev},
       {:mox, "~> 0.5.1"},
+      {:stream_data, "~> 0.4", only: [:dev, :test]},
       {:jason, "~> 1.1"},
       {:timex, "~> 3.6"}
     ]
