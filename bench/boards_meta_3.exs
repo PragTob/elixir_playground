@@ -92,7 +92,8 @@ defmodule BoardBenchmark do
     Enum.each([{0, 0}, {4, 4}, {8, 8}], fn {x, y} ->
       headline("get(#{x}, #{y})")
 
-      Benchee.run(get(x, y),
+      Benchee.run(
+        get(x, y),
         time: 0.5,
         warmup: 0.1,
         print: [benchmarking: false, configuration: false]
@@ -102,7 +103,8 @@ defmodule BoardBenchmark do
     Enum.each([{0, 0}, {4, 4}, {8, 8}], fn {x, y} ->
       headline("set(#{x}, #{y}, :boom)")
 
-      Benchee.run(set(x, y, :boom),
+      Benchee.run(
+        set(x, y, :boom),
         time: 0.5,
         warmup: 0.1,
         print: [benchmarking: false, configuration: false]
@@ -111,7 +113,8 @@ defmodule BoardBenchmark do
 
     headline("mixed bag (3 sets, 3 gets)")
 
-    Benchee.run(mixed_bag(),
+    Benchee.run(
+      mixed_bag(),
       time: 0.5,
       warmup: 0.1,
       memory_time: 0.1,
@@ -121,7 +124,8 @@ defmodule BoardBenchmark do
 
     headline("Creating, getting and setting full board")
 
-    Benchee.run(creating_getting_and_setting_full_board(),
+    Benchee.run(
+      creating_getting_and_setting_full_board(),
       time: 3,
       warmup: 0.5,
       memory_time: 0.1,
