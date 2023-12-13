@@ -2,7 +2,7 @@
 # See: https://github.com/bencheeorg/benchee/issues/406#issuecomment-1853506094
 # Results further down are my own
 
-list = Enum.to_list(1..100)
+list = Enum.to_list(1..10_000)
 
 defmodule Compiled do
   def comprehension(list) do
