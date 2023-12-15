@@ -1,4 +1,3 @@
-# test env to avoid repeated compilation on CI
 port = Port.open({:spawn, "iex"}, [:binary])
 
 # wait for startup
@@ -20,3 +19,4 @@ Port.close(port)
 # receive do
 #   {^port, :closed} -> :ok
 # end
+IO.puts("script finished")
