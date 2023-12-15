@@ -1,4 +1,4 @@
-port = Port.open({:spawn, "iex"}, [:binary])
+port = Port.open({:spawn, "iex"}, [:binary, :exit_status])
 
 # wait for startup
 receive do
@@ -20,10 +20,8 @@ end
 send(port, {self(), {:command, "\a"}})
 send(port, {self(), {:command, "q\n"}})
 
-# message does not seem to arrive
-# receive do
-#   {^port, {:exit_status, num}} -> num
-# end
+messages = :erlang.process_info(self(), :messages)
+IO.inspect(messages, label: "messages")
 # send(port, {self(), :close})
 # receive do
 #   {^port, :closed} -> :ok
