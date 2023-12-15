@@ -14,7 +14,16 @@ end
 # System.cmd("kill", [to_string(os_pid)])
 
 # attempts at closing just the port
-Port.close(port)
+# Port.close(port)
+
+# Fix: https://elixirforum.com/t/starting-shutting-down-iex-with-a-port-gracefully/60388/2?u=pragtob
+send(port, {self(), {:command, "\a"}})
+send(port, {self(), {:command, "q\n"}})
+
+# message does not seem to arrive
+# receive do
+#   {^port, {:exit_status, num}} -> num
+# end
 # send(port, {self(), :close})
 # receive do
 #   {^port, :closed} -> :ok
