@@ -32,6 +32,6 @@ Benchee.run(
   time: 60,
   formatters: [
     {Benchee.Formatters.Console, extended_statistics: true},
-    {Benchee.Formatters.HTML, path: "bench/output/task_no_task/index.html"}
+    {Benchee.Formatters.HTML, file: "bench/output/task_no_task/index.html", auto_open: false}
   ]
 )
