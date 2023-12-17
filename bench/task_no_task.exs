@@ -1,4 +1,3 @@
-# Not terribly large, but passable
 random_list = fn size, spread ->
   for _i <- 1..size, do: :rand.uniform(spread)
 end
@@ -29,7 +28,10 @@ Benchee.run(
     end
   },
   inputs: inputs,
-  warmup: 2,
-  time: 40,
-  formatters: [{Benchee.Formatters.Console, extended_statistics: true}]
+  warmup: 15,
+  time: 60,
+  formatters: [
+    {Benchee.Formatters.Console, extended_statistics: true},
+    {Benchee.Formatters.HTML, path: "bench/output/task_no_task/index.html"}
+  ]
 )
