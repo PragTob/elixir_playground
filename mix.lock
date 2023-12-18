@@ -1,6 +1,6 @@
 %{
   "assertions": {:hex, :assertions, "0.19.0", "f177fcc22b55df6a41a58b151e430d189d0a1083dae3240522503dedaf8e1174", [:mix], [], "hexpm", "759bdbf977fe3e2d2b79f8a65d8674f29ac757781136a6cb4adf88f1574af1d8"},
-  "benchee": {:git, "https://github.com/bencheeorg/benchee.git", "59f9886dc5ec98e7c2d21cb8b1d3f6bed3811a15", []},
+  "benchee": {:git, "https://github.com/bencheeorg/benchee.git", "aaadca393c5a7c010f1f5c11a918105ee85462e8", []},
   "benchee_html": {:git, "https://github.com/bencheeorg/benchee_html.git", "e29289f468419237485f54d14b64c436c6f6525a", []},
   "benchee_json": {:hex, :benchee_json, "1.0.0", "cc661f4454d5995c08fe10dd1f2f72f229c8f0fb1c96f6b327a8c8fc96a91fe5", [:mix], [{:benchee, ">= 0.99.0 and < 2.0.0", [hex: :benchee, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm", "da05d813f9123505f870344d68fb7c86a4f0f9074df7d7b7e2bb011a63ec231c"},
   "bunt": {:hex, :bunt, "0.2.1", "e2d4792f7bc0ced7583ab54922808919518d0e57ee162901a16a1b6664ef3b14", [:mix], [], "hexpm", "a330bfb4245239787b15005e66ae6845c9cd524a288f0d141c148b02603777a5"},
