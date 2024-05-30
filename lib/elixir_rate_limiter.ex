@@ -15,7 +15,7 @@ defmodule RateLimiter do
 
   @impl GenServer
   def handle_call({:report_request, conn}, _from, state) do
-    ip = conn.remote_ip
+    _ip = conn.remote_ip
     # actual logic irrelevant for example, but involves ip
 
     {:reply, :ok, state}
