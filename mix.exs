@@ -24,8 +24,8 @@ defmodule ElixirPlayground.Mixfile do
   defp deps do
     [
       {:assertions, "~> 0.10", only: :test},
-      {:benchee, "~> 1.0", github: "bencheeorg/benchee", override: true},
-      {:benchee_html, "~> 1.0", github: "bencheeorg/benchee_html"},
+      {:benchee, "~> 1.0"},
+      {:benchee_html, "~> 1.0"},
       {:credo, "~> 0.4"},
       {:ex_guard, "~> 1.3", only: :dev},
       {:mox, "~> 0.5.1"},
