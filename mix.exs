@@ -28,6 +28,7 @@ defmodule ElixirPlayground.Mixfile do
       {:benchee_html, "~> 1.0"},
       {:credo, "~> 0.4"},
       {:ex_guard, "~> 1.3", only: :dev},
+      {:logger_json, "~> 6.0"},
       {:mox, "~> 0.5.1"},
       {:plug, "~> 1.15"},
       {:stream_data, "~> 0.4", only: [:dev, :test]},
