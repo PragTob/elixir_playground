@@ -76,6 +76,7 @@ inputs = [
 ]
 
 redactors = []
+{_, default_formatter_config} = Logger.Formatter.new(colors: [enabled?: false])
 
 Benchee.run(
   %{
@@ -85,10 +86,25 @@ Benchee.run(
     end,
     "whole logger format" => fn input ->
       LoggerJSON.Formatters.Basic.format(%{level: :info, meta: %{}, msg: {:report, input}}, [])
-    end
+    end,
+    # odd that those 2 end up being the slowest - what additional work are they doing?
+    "default formatter with report data (sanity check)" => fn input ->
+      Logger.Formatter.format(
+        %{level: :info, meta: %{}, msg: {:report, input}},
+        default_formatter_config
+      )
+    end,
+    "default formatter with pre-formatted report data  as string (sanity check 2)" =>
+      {fn input ->
+         Logger.Formatter.format(
+           %{level: :info, meta: %{}, msg: {:string, input}},
+           default_formatter_config
+         )
+       end, before_scenario: &inspect/1}
   },
-  inputs: inputs,
-  formatters: [{Benchee.Formatters.Console, extended_statistics: true}]
+  warmup: 0.1,
+  time: 1,
+  inputs: inputs
 )
 
 # Operating System: Linux
@@ -100,76 +116,55 @@ Benchee.run(
 # JIT enabled: true
 
 # Benchmark suite executing with the following configuration:
-# warmup: 2 s
-# time: 5 s
+# warmup: 100 ms
+# time: 1 s
 # memory time: 0 ns
 # reduction time: 0 ns
 # parallel: 1
 # inputs: just a msg, some map, bigger_map
-# Estimated total run time: 1 min 3 s
-
-# Benchmarking just Jason with input just a msg ...
-# Benchmarking just Jason with input some map ...
-# Benchmarking just Jason with input bigger_map ...
-# Benchmarking logger_json encode with input just a msg ...
-# Benchmarking logger_json encode with input some map ...
-# Benchmarking logger_json encode with input bigger_map ...
-# Benchmarking whole logger format with input just a msg ...
-# Benchmarking whole logger format with input some map ...
-# Benchmarking whole logger format with input bigger_map ...
-# Calculating statistics...
-# Formatting results...
+# Estimated total run time: 16 s 500 ms
 
 # ##### With input just a msg #####
-# Name                          ips        average  deviation         median         99th %
-# just Jason                 3.01 M      332.23 ns  ±9650.30%         270 ns         550 ns
-# logger_json encode         1.33 M      751.78 ns  ±5727.22%         640 ns        1230 ns
-# whole logger format        0.46 M     2170.83 ns  ±1068.01%        2030 ns        3560 ns
+# Name                                                                                   ips        average  deviation         median         99th %
+# just Jason                                                                       2830.72 K        0.35 μs ±10003.68%        0.26 μs        0.47 μs
+# logger_json encode                                                               1356.70 K        0.74 μs  ±3335.62%        0.62 μs        1.25 μs
+# whole logger format                                                               471.89 K        2.12 μs   ±278.98%        2.01 μs        3.74 μs
+# default formatter with pre-formatted report data  as string (sanity check 2)      421.85 K        2.37 μs   ±510.49%        2.26 μs        3.54 μs
+# default formatter with report data (sanity check)                                 177.04 K        5.65 μs   ±109.63%        5.44 μs        8.66 μs
 
 # Comparison:
-# just Jason                 3.01 M
-# logger_json encode         1.33 M - 2.26x slower +419.55 ns
-# whole logger format        0.46 M - 6.53x slower +1838.59 ns
-
-# Extended statistics:
-
-# Name                        minimum        maximum    sample size                     mode
-# just Jason                   240 ns    54223721 ns         9.18 M                   260 ns
-# logger_json encode           560 ns    66101593 ns         5.21 M                   640 ns
-# whole logger format         1830 ns    23157131 ns         2.08 M                  1990 ns
+# just Jason                                                                       2830.72 K
+# logger_json encode                                                               1356.70 K - 2.09x slower +0.38 μs
+# whole logger format                                                               471.89 K - 6.00x slower +1.77 μs
+# default formatter with pre-formatted report data  as string (sanity check 2)      421.85 K - 6.71x slower +2.02 μs
+# default formatter with report data (sanity check)                                 177.04 K - 15.99x slower +5.30 μs
 
 # ##### With input some map #####
-# Name                          ips        average  deviation         median         99th %
-# logger_json encode       732.91 K        1.36 μs  ±2547.28%        1.23 μs        1.89 μs
-# just Jason               303.60 K        3.29 μs  ±1112.07%        2.42 μs        5.59 μs
-# whole logger format      185.90 K        5.38 μs   ±451.79%        4.56 μs       10.34 μs
+# Name                                                                                   ips        average  deviation         median         99th %
+# logger_json encode                                                                783.64 K        1.28 μs   ±676.40%        1.18 μs        2.02 μs
+# default formatter with pre-formatted report data  as string (sanity check 2)      425.95 K        2.35 μs   ±226.76%        2.27 μs        3.39 μs
+# just Jason                                                                        391.49 K        2.55 μs   ±652.46%        1.74 μs        6.87 μs
+# whole logger format                                                               209.54 K        4.77 μs   ±170.75%        4.29 μs       14.87 μs
+# default formatter with report data (sanity check)                                  75.60 K       13.23 μs    ±27.32%       12.50 μs       21.52 μs
 
 # Comparison:
-# logger_json encode       732.91 K
-# just Jason               303.60 K - 2.41x slower +1.93 μs
-# whole logger format      185.90 K - 3.94x slower +4.01 μs
-
-# Extended statistics:
-
-# Name                        minimum        maximum    sample size                     mode
-# logger_json encode          1.11 μs    31718.86 μs         3.10 M                  1.23 μs
-# just Jason                  1.56 μs    20270.33 μs         1.39 M                  2.38 μs
-# whole logger format         3.79 μs    14038.87 μs       887.15 K                  4.22 μs
+# logger_json encode                                                                783.64 K
+# default formatter with pre-formatted report data  as string (sanity check 2)      425.95 K - 1.84x slower +1.07 μs
+# just Jason                                                                        391.49 K - 2.00x slower +1.28 μs
+# whole logger format                                                               209.54 K - 3.74x slower +3.50 μs
+# default formatter with report data (sanity check)                                  75.60 K - 10.37x slower +11.95 μs
 
 # ##### With input bigger_map #####
-# Name                          ips        average  deviation         median         99th %
-# just Jason               255.76 K        3.91 μs   ±736.51%        3.64 μs        7.09 μs
-# logger_json encode        95.88 K       10.43 μs   ±111.97%       10.14 μs       21.18 μs
-# whole logger format       66.06 K       15.14 μs    ±47.10%       14.67 μs       26.58 μs
+# Name                                                                                   ips        average  deviation         median         99th %
+# default formatter with pre-formatted report data  as string (sanity check 2)      413.12 K        2.42 μs   ±243.13%        2.27 μs        5.21 μs
+# just Jason                                                                        267.60 K        3.74 μs    ±94.93%        3.54 μs        6.48 μs
+# logger_json encode                                                                 97.94 K       10.21 μs    ±31.68%        9.89 μs       16.91 μs
+# whole logger format                                                                65.13 K       15.35 μs    ±25.26%       14.98 μs       19.64 μs
+# default formatter with report data (sanity check)                                  20.29 K       49.29 μs    ±13.24%       48.20 μs       69.95 μs
 
 # Comparison:
-# just Jason               255.76 K
-# logger_json encode        95.88 K - 2.67x slower +6.52 μs
-# whole logger format       66.06 K - 3.87x slower +11.23 μs
-
-# Extended statistics:
-
-# Name                        minimum        maximum    sample size                     mode
-# just Jason                  3.02 μs    19332.05 μs         1.21 M                  3.59 μs
-# logger_json encode          8.88 μs     7043.16 μs       467.91 K                 10.15 μs
-# whole logger format        13.28 μs     3032.60 μs       324.48 K                 14.61 μs
+# default formatter with pre-formatted report data  as string (sanity check 2)      413.12 K
+# just Jason                                                                        267.60 K - 1.54x slower +1.32 μs
+# logger_json encode                                                                 97.94 K - 4.22x slower +7.79 μs
+# whole logger format                                                                65.13 K - 6.34x slower +12.93 μs
+# default formatter with report data (sanity check)                                  20.29 K - 20.36x slower +46.87 μs
