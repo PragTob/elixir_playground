@@ -46,12 +46,13 @@ Benchee.run(
   max_sample_size: 5_000_000
 )
 
+# tobi@qiqi:~/github/elixir_playground(main)$ mix run bench/map_vs_pattern.exs
 # Operating System: Linux
 # CPU Information: AMD Ryzen 9 5900X 12-Core Processor
 # Number of Available Cores: 24
 # Available memory: 31.26 GB
-# Elixir 1.17.3
-# Erlang 27.1
+# Elixir 1.18.3
+# Erlang 27.3.2
 # JIT enabled: true
 
 # Benchmark suite executing with the following configuration:
@@ -70,18 +71,18 @@ Benchee.run(
 # Formatting results...
 
 # Name                    ips        average  deviation         median         99th %
-# pattern match       37.40 M       26.74 ns    ±98.49%          30 ns          50 ns
-# list                36.95 M       27.07 ns    ±91.82%          30 ns          50 ns
-# map                 33.35 M       29.98 ns    ±87.21%          30 ns          60 ns
+# pattern match       38.26 M       26.14 ns    ±95.29%          30 ns          40 ns
+# list                35.80 M       27.93 ns   ±121.10%          30 ns          60 ns
+# map                 34.00 M       29.41 ns    ±92.40%          30 ns          40 ns
 
 # Comparison:
-# pattern match       37.40 M
-# list                36.95 M - 1.01x slower +0.33 ns
-# map                 33.35 M - 1.12x slower +3.24 ns
+# pattern match       38.26 M
+# list                35.80 M - 1.07x slower +1.79 ns
+# map                 34.00 M - 1.13x slower +3.28 ns
 
 # Extended statistics:
 
 # Name                  minimum        maximum    sample size                     mode
-# pattern match           20 ns       19692 ns            5 M                    30 ns
-# list                    20 ns       10201 ns            5 M                    30 ns
-# map                     20 ns       15481 ns            5 M                    30 ns
+# pattern match           20 ns       13181 ns            5 M                    30 ns
+# list                    20 ns       40802 ns            5 M                    30 ns
+# map                     20 ns       14461 ns            5 M                    30
